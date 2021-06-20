@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
+		<title>Home - Cafeteira</title>
+		<link href="estilos/estilo.css" rel="stylesheet" type="text/css">
+        <link href="estilos/normalize.css" rel="stylesheet" type="text/css">
+        <link href="estilos/cafe_MQ.css" rel="stylesheet" type="text/css">
+	</head>
+    <body onLoad="func(); relogio();">
+        <section id="data">
+            <div id="relogio"></div>
+        </section>
+        <br/>
+        <section id="cabecalho">
+			<h1>Cafeteira Inteligente</h1>
+			<p>Automação Residencial de Baixo Custo</p>
+        </section>
+        <section id="menu">
+            <div style="text-align: center;">
+                <span class="ajuste Selec">Ligar/Desligar</span>
+                <a href="agendar.html" class="ajuste btn btn-grayC">Agendar</a>
+                <a href="config.html" class="ajuste btn btn-grayC">Configurações</a>
+            </div>
+        </section>
+        <br/><br/><br/><br/><br/>
+        <section id=corpo>
+            <div>
+                <h1>Ligar/Desligar Cafeteira</h1>
+                <p>Pressione o botão para ligar/desligar a Cafeteira.</p>
+                <br/><br/>
+                <img src="imagens/cafe.png">
+                %ESTADODORELE%
+				<label for="liga-desliga" class="liga-desliga__botao"></label>
+				<br/><br/><br/><br/>
+				<p class="status">Status:<span id="estadoCafe" style="text-transform: uppercase; font-weight: bold"></span></p>
+            </div>
+        </section>        
+        <footer id="rodape">
+            <div id="foot"></div>
+        </footer>
+        <script type="text/javascript" src="scripts/script.js"></script>
+	</body>
+</html>

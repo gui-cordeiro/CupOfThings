@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
+		<title>Agendar - Cafeteira</title>
+		<link href="estilos/estilo.css" rel="stylesheet" type="text/css">
+        <link href="estilos/normalize.css" rel="stylesheet" type="text/css">
+        <link href="estilos/agendar_MQ.css" rel="stylesheet" type="text/css">
+	</head>
+	<body onLoad="relogio(); atualizarAgenda();">
+        <section id="data">
+            <div id="relogio"></div>
+        </section>
+        <br/>
+        <section id="cabecalho">
+			<h1>Cafeteira Inteligente</h1>
+			<p>Automação Residencial de Baixo Custo</p>
+        </section>
+        <section id="menu">
+            <div style="text-align: center;">
+                <a href="index.html" class="ajuste btn btn-grayC">Ligar/Desligar</a>
+                <span class="ajuste Selec">Agendar</span>
+                <a href="config.html" class="ajuste btn btn-grayC">Configurações</a>
+            </div>
+        </section>
+        <br/><br/><br/><br/><br/>
+        <section id="corpo">
+            <div>
+                <h1>Agendar Cafeteira</h1>
+                <p>Faça um agendamento para acionar a Cafeteira.</p>
+                <br/><br/>
+                <form>
+					<fieldset>
+                        <legend><b>A cafeteira será acionada:</b></legend>
+                        <span id="acionamento">%ESTADOAGENDAMENTO%</span>
+					</fieldset><br/>
+                    <span id="botaoCancelar">%BOTAOCANCELAR%</span>
+				<br/><br/><br/><br/>
+			</form>
+            <form>
+                <fieldset>
+                    <legend><b>Configurar agendamento</b></legend><br/>
+                    <label for="hora"><b>Selecione o horário: </b></label>
+                    <input type="time" class="hora" id="hora" name="Hora" value="06:30"/><br/><br/>
+                    <label for="rem">Lembrar deste horário:</label>
+                    <input type="checkbox" class="Lembrar" id="rem" name="Lembrete" /><br/><br/>
+                </fieldset><br/>
+                <button class="btn btn-gray" onclick="enviar();">Agendar Horário</button><br/>
+			</form>
+            </div>
+        </section>
+        <footer id="rodape">
+            <div id="foot"></div>
+        </footer>
+        <script type="text/javascript" src="scripts/script.js"></script>
+	</body>
+</html>
