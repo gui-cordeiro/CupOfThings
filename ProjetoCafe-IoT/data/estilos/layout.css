@@ -1,0 +1,92 @@
+@charset 'UTF-8';
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
+#telaloader{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #C3ADCB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.loader{
+    animation: spin 0.8s linear infinite;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 6px solid #e5e5e5;
+    border-top-color: transparent;
+}
+
+@keyframes spin{
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+body{
+    background-image: linear-gradient(to right, rgb(216, 199, 231), #cdc4f3, #96c5f7ee);
+    background-size: 400% 400%;
+    animation: body 10s ease-in-out infinite;
+    margin: 0;
+}
+
+@keyframes body{
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+
+header{
+    font-family: "Lobster Two";
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 2px #58556334;
+}
+
+header p{
+    margin-top: -10px;
+    margin-bottom: 30px;
+}
+
+main{
+    background-color: white;
+    color: #5B2E48;
+    font: normal 18pt "Amatic SC";
+    width: 280px;
+    height: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 2px #5855631c;
+    margin: auto;
+    text-align: center;
+}
+
+main img#img{
+    width: 75%;
+}
+
+main h2{
+    font-weight: bold;
+}
+
+footer{
+    margin: 50px 0;
+}

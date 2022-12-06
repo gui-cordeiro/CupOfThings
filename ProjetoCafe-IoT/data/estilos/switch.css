@@ -1,0 +1,54 @@
+@charset 'UTF-8';
+
+.switch{
+    padding-top: 20px;
+}
+.switch__check{
+    position: absolute;
+    left: -9999px;
+}
+
+.switch__btn{
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    cursor: pointer;
+}
+
+.switch__btn::before,
+.switch__btn::after{
+    content: "";
+}
+
+.switch__btn::before{
+    position: relative;
+    display: inline-block;
+    width: 160px;
+    height: 80px;
+    background-color: #900;
+    border-radius: 150px;
+    transition: all 0.3s ease;
+}
+
+.switch__btn::after{
+    position: absolute;
+    top: 1px;
+    left: 1.2px;
+    width: 78px;
+    height: 78px;
+    border-radius: 100%;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.switch__check:checked + .switch__btn::before{
+    background-color: #55D069;
+}
+
+.switch__check:checked + .switch__btn::after{
+    left: 81px;
+}
+
+.switch__check:focus + .switch__btn::before{
+    outline: none;
+}

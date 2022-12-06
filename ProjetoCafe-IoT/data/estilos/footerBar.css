@@ -1,0 +1,217 @@
+/*********************************************************************************************/
+/*                                 0) Configurações Globais                                  */
+/*********************************************************************************************/
+
+div#tempo_popup{
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 35px;
+    padding: 0;
+    bottom: 0;
+    background-color: #35353594; /*OFF: #35353594 | Café pronto: #55d06ad2 | Stand-by (café sendo feito): #a53860d2*/
+    color: #e7d8c9; /*Normal: #e7d8c9 | Café pronto: #2c2c2c*/
+    font: bold 15pt "Amatic SC";
+    transition: all .6s ease;
+    box-shadow: 0 0 10px #35353594;
+}
+
+div#tempo_popup:hover{
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+}
+
+/*********************************************************************************************/
+/*                                  1) Cafeteira desligada                                   */
+/*********************************************************************************************/
+
+div#tempo_popup p{
+    margin: 4px;
+    text-align: center;
+}
+
+div#infohead{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px solid black;
+    height: 154px;
+    margin-top: 20px;
+}
+
+div#infohead img{
+    width: 130px;
+    float: left;
+    border-radius: 100%;
+    border: 2px solid #453646;
+}
+
+div#divisao{
+    opacity: 0;
+    float: left;
+    margin: 15px;
+    width: 3px;
+    height: 110px;
+    border: 1px solid #453646;
+    background-color: #453646;
+}
+
+div#desc{
+    float: right;
+    width: 70px;
+    border-bottom: 2px dashed #453646;
+    margin: 20px 0;
+    margin-right: 10px;
+}
+
+div#desc p{
+    text-align: center;
+}
+
+div#info{
+    opacity: 0;
+    transition: opacity 1s .3s ease;
+}
+
+div#social{
+    opacity: 0;
+    display: block;
+    border: 0px solid #453646;
+    height: 154px;
+    width: 260px;
+    margin: 20px auto;
+    transition: opacity 1s .6s ease;
+}
+
+div#social p{
+    border-bottom: 2px dashed #453646;
+    width: 170px;
+    margin: auto;
+}
+
+div.iconsocial-linha{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px solid #453646;
+    height: 60px;
+    width: fit-content;
+    margin: 20px auto;
+}
+
+div.imgsocial{
+    float: left;
+    margin: 0 10px;
+    padding: 0;
+    border: 2px solid #453646;
+    width: 59px;
+    height: 59px;
+    border-radius: 100%;
+    transition: all .15s ease;
+    cursor: pointer;
+}
+
+div.imgsocial:hover{
+    border-color: #e7d8c9;
+}
+
+div#s0{
+    background: url("../icons/social/Twitter.png");
+}
+div#s0:hover{
+    background: url("../icons/social/hover/Twitter.png");
+}
+
+div#s1{
+    background: url("../icons/social/Instagram.png");
+}
+div#s1:hover{
+    background: url("../icons/social/hover/Instagram.png");
+}
+
+div#s2{
+    background: url("../icons/social/Facebook.png");
+}
+div#s2:hover{
+    background: url("../icons/social/hover/Facebook.png");
+}
+
+div#s3{
+    background: url("../icons/social/GitHub.png");
+}
+div#s3:hover{
+    background: url("../icons/social/hover/GitHub.png");
+}
+
+div#s4{
+    background: url("../icons/social/LinkedIn.png");
+}
+div#s4:hover{
+    background: url("../icons/social/hover/LinkedIn.png");
+}
+
+/*********************************************************************************************/
+/*                                   2) Cafeteira ligada                                     */
+/*********************************************************************************************/
+
+div#conteudo p#msg{
+    margin: 15px auto;
+    opacity: 0;
+    transition: opacity 1s .6s ease;
+}
+
+div#lembrete{
+    opacity: 0;
+    margin: 15px auto;
+    text-align: center;
+    width: 340px;
+    height: 60px;
+    transition: opacity 1s .4s ease;
+}
+
+div#spotify{
+    width: fit-content;
+    height: 254px;
+    margin: 15px auto;
+    border: 2px solid white;
+}
+
+/*********************************************************************************************/
+/*                                      3) Café pronto                                       */
+/*********************************************************************************************/
+
+div#imgPronto{
+    opacity: 0;
+    margin: 25px auto 0 auto;
+    border: 3px solid;
+    width: fit-content;
+    height: 181px;
+    border-radius: 100%;
+    transition: opacity 1s .3s ease;
+}
+
+div#imgPronto img{
+    border-radius: 100%;
+    width: 175px;
+}
+
+div#autoOff{
+    opacity: 0;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    border: 1px dashed;
+    border-radius: 10px;
+    transition: opacity 1s .6s ease;
+}
+
+div#autoOffHora{
+    width: fit-content;
+    height: fit-content;
+    margin: 10px auto 0 auto;
+    border: 0px solid;
+    font: bold 30pt "Lobster Two";
+}
