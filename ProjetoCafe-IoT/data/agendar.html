@@ -1,57 +1,130 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
-		<title>Agendar - Cafeteira</title>
-		<link href="estilos/estilo.css" rel="stylesheet" type="text/css">
-        <link href="estilos/normalize.css" rel="stylesheet" type="text/css">
-        <link href="estilos/agendar_MQ.css" rel="stylesheet" type="text/css">
-	</head>
-	<body onLoad="relogio(); atualizarAgenda();">
-        <section id="data">
-            <div id="relogio"></div>
-        </section>
-        <br/>
-        <section id="cabecalho">
-			<h1>Cafeteira Inteligente</h1>
-			<p>Automação Residencial de Baixo Custo</p>
-        </section>
-        <section id="menu">
-            <div style="text-align: center;">
-                <a href="index.html" class="ajuste btn btn-grayC">Ligar/Desligar</a>
-                <span class="ajuste Selec">Agendar</span>
-                <a href="config.html" class="ajuste btn btn-grayC">Configurações</a>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Home - Cafeteira</title>
+    <link rel="stylesheet" href="estilos/layout.css">
+    <link rel="stylesheet" href="estilos/agendar.css">
+    <link rel="stylesheet" href="estilos/menu.css">
+    <link rel="stylesheet" href="estilos/footerBar.css">
+    <link rel="stylesheet" href="estilos/timer.css">
+</head>
+<body>
+    <header>
+        <h1>Cafeteira Inteligente</h1>
+        <p>Seu amado café feito de forma descomplicada!</p>
+    </header>
+    <main>
+        <div class="titulo">
+            <h2>Agendar Horário</h2>
+            <p>Agende um horário para tomar aquele café sem preocupação!</p>
+        </div>
+        <div id="imagem">
+            <img src="imagens/gif2.gif" id="img" alt="">
+        </div>
+    </main>
+    <div id="agenda">
+        <p>Sua cafeteira ligará:</p>
+        <div id="agenda_hora">Amanhã, às 06:30</div>
+        <div id="btn-clean" class="btn">
+            <img src="icons/outros/delete.png" alt="">
+        </div>
+        <div id="btn-criar" class="btn">Agendar horário</div>
+    </div>
+    <input type="checkbox" id="menu">
+    <label for="menu">
+        <div class="menu">
+            <span class="hamburguer"></span>
+        </div>
+        <div id="tampar"> </div>
+        <ul>
+            <!-- Fazer a parada de ontem: Foto com Clima -->
+            <div id="container-menu">
+                <div id="cont-menuimg">
+                    <img src="imagens/perfil/Gui.png" alt="">
+                </div>
+                <div id="cont-menudivisao"></div>
+                <div id="cont-menuweather">
+                    <div id="cont-menuweatherimg"><img src="icons/clima/unknown.png" alt="Ícone do Clima"></div>
+                    <div id="cont-menuweathertemp">
+                        <div id="cont-menuweathertemp_atual">??ºC</div>
+                        ??ºC/??ºC
+                    </div>
+                    <div id="cont-menuweatherdesc">Descrição do Clima</div>
+                </div>
             </div>
-        </section>
-        <br/><br/><br/><br/><br/>
-        <section id="corpo">
-            <div>
-                <h1>Agendar Cafeteira</h1>
-                <p>Faça um agendamento para acionar a Cafeteira.</p>
-                <br/><br/>
-                <form>
-					<fieldset>
-                        <legend><b>A cafeteira será acionada:</b></legend>
-                        <span id="acionamento">%ESTADOAGENDAMENTO%</span>
-					</fieldset><br/>
-                    <span id="botaoCancelar">%BOTAOCANCELAR%</span>
-				<br/><br/><br/><br/>
-			</form>
-            <form>
-                <fieldset>
-                    <legend><b>Configurar agendamento</b></legend><br/>
-                    <label for="hora"><b>Selecione o horário: </b></label>
-                    <input type="time" class="hora" id="hora" name="Hora" value="06:30"/><br/><br/>
-                    <label for="rem">Lembrar deste horário:</label>
-                    <input type="checkbox" class="Lembrar" id="rem" name="Lembrete" /><br/><br/>
-                </fieldset><br/>
-                <button class="btn btn-gray" onclick="enviar();">Agendar Horário</button><br/>
-			</form>
+            <li><a href="index.html">Ligar/Desligar Cafeteira</a></li>
+            <li><a href="#">Agendar Horário</a></li>
+            <li><a href="#">Configurações</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </label>
+    <footer>
+
+    </footer>
+    <div id="tempo_popup">
+        <p id="msg">Com 🤍 por Guilherme Cordeiro</p>
+        <div id="info">
+            <div id="infohead">
+                <img src="imagens/perfil/Gui.png" alt="">
+                <div id="divisao"></div>
+                <div id="desc">
+                    <p>Sou eu! :D</p>
+                </div>
+                </div>
             </div>
-        </section>
-        <footer id="rodape">
-            <div id="foot"></div>
-        </footer>
-        <script type="text/javascript" src="scripts/script.js"></script>
-	</body>
+            <div id="social">
+                <p>Siga as minhas redes sociais!</p>
+                <div class="iconsocial-linha">
+                    <a href="https://twitter.com/Gui_CdR" target="__blank" rel="external">
+                        <div id="s0" class="imgsocial"></div>
+                    </a>
+                    <a href="https://www.instagram.com/gui.scordeiro/" target="_blank" rel="external">
+                        <div id="s1" class="imgsocial"></div>
+                    </a>
+                    <a href="https://www.facebook.com/guilherme.cordeiro.56232" target="__blank" rel="external">
+                        <div id="s2" class="imgsocial"></div>
+                    </a>
+                </div>
+                <div class="iconsocial-linha">
+                    <a href="https://github.com/gui-cordeiro" target="__blank" rel="external">
+                        <div id="s3" class="imgsocial"></div>
+                    </a>
+                    <a href="https://linkedin.com/in/gui-cordeiro" target="__blank" rel="external">
+                        <div id="s4" class="imgsocial"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-apagar" class="modal-container">
+        <div id="agenda-criar" class="modal">
+            <div class="titulo">
+                <h2>Criar Novo Horário</h2>
+                <p>Configure o seu novo agendamento abaixo!</p>
+            </div>
+            <div id="form">
+                <div class="form-nome">Hora: </div>
+                <div class="form-hora"><input type="time" name="" id=""></div>
+                <div class="form-nome">Ligar cafeteira: </div>
+                <select name="" id="sel-diasSemana" class="form-hora">
+                    <option value="">Nos dias úteis</option>
+                    <option value="">Nos fins de semana</option>
+                    <option value="">Todos os dias da semana</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="telaloader">
+        <span class="loader"></span>
+    </div>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/footerBar.js"></script>
+    <script src="scripts/timer.js"></script>
+    <!--<script src="scripts/weather.js"></script>-->
+</body>
 </html>
