@@ -1,0 +1,93 @@
+#cobrir{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 186px;
+    width: 186px;
+    margin: 0px auto;
+    border: 6px solid hsl(296, 13%, 24%);
+    border-radius: 150px;
+    opacity: 0;
+    transition: opacity 1s .3s ease;
+}
+
+.circular{
+    margin: 50px auto;
+    height: 100px;
+    width: 100px;
+    position: relative;
+    transform: scale(1.75);
+}
+
+.circular .inner{
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    height: 80px;
+    width: 80px;
+    margin: -40px 0 0 -40px;
+    background-color: #E7D8C9;
+    border: 1px solid #453646;
+    border-radius: 100%;
+}
+
+.circular .numb{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: fit-content;
+    height: fit-content;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    color: #753753;
+    font: bold 17pt "Lobster Two";
+}
+
+.circular .bar{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #E7D8C9;
+    border-radius: 100%;
+    clip: rect(0px, 100px, 100px, 50px);
+}
+
+.circle .bar .progress{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    clip: rect(0px, 50px, 100px, 0px);
+    background-color: #753753;
+}
+
+.circle .left .progress{
+    z-index: 1;
+    animation: left linear both;
+}
+
+@keyframes left {
+    100%{
+        transform: rotate(180deg);
+    }
+}
+
+.circle .right{
+    z-index: 1;
+    transform: rotate(180deg);
+}
+
+.circle .right .progress{
+    animation: right linear both;
+}
+
+@keyframes right {
+    100%{
+        transform: rotate(180deg);
+    }
+}
+
+.tempoRest{
+    font-size: 17pt;
+}

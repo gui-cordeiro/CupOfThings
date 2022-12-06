@@ -1,0 +1,83 @@
+div#agenda{
+    background-color: #472F3F;
+    color: #E7D8C9;
+    font: normal 18pt "Amatic SC";
+    width: 280px;
+    margin: 15px auto;
+    padding: 20px;
+    border-radius: 10px;
+    /*margin-bottom: 90px;*/
+}
+
+div#agenda p{
+    margin: 0 auto 2px auto;
+}
+
+div#agenda_hora{
+    font: bold 24.5pt "Lobster Two";
+    margin: 2px auto 0 auto;
+}
+
+div.btn{
+    font: bold 15pt "Amatic SC";
+    background-color: #E7D8C9;
+    color: #472F3F;
+    border: 2px solid #472F3F;
+    transition: all .2s ease;
+    cursor: pointer;
+    margin-top: -25px;
+}
+
+div#btn-clean{
+    position: relative;
+    bottom: 87px;
+    left: 215px;
+    width: 60px;
+    height: 60px;
+    line-height: 65px;
+    text-align: center;
+    border-radius: 100%;
+}
+
+div#btn-clean img{
+    width: 25px;
+}
+
+div#btn-criar{
+    padding: 10px;
+    margin: auto;
+    text-align: center;
+    border-radius: 150px;
+}
+
+div#agenda-criar{
+    background-color: white;
+    color: #472F3F;
+    font: normal 18pt "Amatic SC";
+    width: 280px;
+    margin: 60px auto;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+
+    margin-top: -35px;
+}
+
+div#form{
+    border: 1px dashed;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: left;
+}
+
+div.form-nome, div.form-hora{
+    display: block;
+}
+
+div.form-hora{
+    margin: -10px 0 10px 0;
+}
+
+select#sel-diasSemana{
+    margin-top: 0px;
+}
