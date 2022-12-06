@@ -1,44 +1,106 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
-		<title>Home - Cafeteira</title>
-		<link href="estilos/estilo.css" rel="stylesheet" type="text/css">
-        <link href="estilos/normalize.css" rel="stylesheet" type="text/css">
-        <link href="estilos/cafe_MQ.css" rel="stylesheet" type="text/css">
-	</head>
-    <body onLoad="func(); relogio();">
-        <section id="data">
-            <div id="relogio"></div>
-        </section>
-        <br/>
-        <section id="cabecalho">
-			<h1>Cafeteira Inteligente</h1>
-			<p>Automação Residencial de Baixo Custo</p>
-        </section>
-        <section id="menu">
-            <div style="text-align: center;">
-                <span class="ajuste Selec">Ligar/Desligar</span>
-                <a href="agendar.html" class="ajuste btn btn-grayC">Agendar</a>
-                <a href="config.html" class="ajuste btn btn-grayC">Configurações</a>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Home - Cafeteira</title>
+    <link rel="stylesheet" href="estilos/layout.css">
+    <link rel="stylesheet" href="estilos/switch.css">
+    <link rel="stylesheet" href="estilos/menu.css">
+    <link rel="stylesheet" href="estilos/footerBar.css">
+    <link rel="stylesheet" href="estilos/timer.css">
+</head>
+<body>
+    <header>
+        <h1>Cafeteira Inteligente</h1>
+        <p>Seu amado café feito de forma descomplicada!</p>
+    </header>
+    <main>
+        <div class="titulo">
+            <h2>Ligar/Desligar Cafeteira</h2>
+            <p>Prepare o seu café e comece o seu dia a todo o vapor!</p>
+        </div>
+        <div id="imagem">
+            <img src="imagens/index.gif" id="img" alt="GIF de xícara de café com rosto alegre">
+        </div>
+        <div class="switch">
+            <input type="checkbox" class="switch__check" id="switch">
+            <label for="switch" class="switch__btn"></label>
+        </div>
+    </main>
+    <input type="checkbox" id="menu">
+    <label for="menu">
+        <div class="menu">
+            <span class="hamburguer"></span>
+        </div>
+        <div id="tampar"> </div>
+        <ul>
+            <!-- Fazer a parada de ontem: Foto com Clima -->
+            <div id="container-menu">
+                <div id="cont-menuimg">
+                    <img src="imagens/perfil/Gui.png" alt="">
+                </div>
+                <div id="cont-menudivisao"></div>
+                <div id="cont-menuweather">
+                    <div id="cont-menuweatherimg"><img src="icons/clima/unknown.png" alt="Ícone do Clima"></div>
+                    <div id="cont-menuweathertemp">
+                        <div id="cont-menuweathertemp_atual">??ºC</div>
+                        ??ºC/??ºC
+                    </div>
+                    <div id="cont-menuweatherdesc">Descrição do Clima</div>
+                </div>
             </div>
-        </section>
-        <br/><br/><br/><br/><br/>
-        <section id=corpo>
-            <div>
-                <h1>Ligar/Desligar Cafeteira</h1>
-                <p>Pressione o botão para ligar/desligar a Cafeteira.</p>
-                <br/><br/>
-                <img src="imagens/cafe.png">
-                %ESTADODORELE%
-				<label for="liga-desliga" class="liga-desliga__botao"></label>
-				<br/><br/><br/><br/>
-				<p class="status">Status:<span id="estadoCafe" style="text-transform: uppercase; font-weight: bold"></span></p>
+            <li><a href="index.html">Ligar/Desligar Cafeteira</a></li>
+            <li><a href="agendar.html">Agendar Horário</a></li>
+            <li><a href="#">Configurações</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </label>
+    <footer>
+
+    </footer>
+    <div id="tempo_popup">
+        <p id="msg">Com 🤍 por Guilherme Cordeiro</p>
+        <div id="info">
+            <div id="infohead">
+                <img src="imagens/perfil/Gui.png" alt="">
+                <div id="divisao"></div>
+                <div id="desc">
+                    <p>Sou eu! :D</p>
+                </div>
+                </div>
             </div>
-        </section>        
-        <footer id="rodape">
-            <div id="foot"></div>
-        </footer>
-        <script type="text/javascript" src="scripts/script.js"></script>
-	</body>
+            <div id="social">
+                <p>Siga as minhas redes sociais!</p>
+                <div class="iconsocial-linha">
+                    <a href="https://twitter.com/Gui_CdR" target="__blank" rel="external">
+                        <div id="s0" class="imgsocial"></div>
+                    </a>
+                    <a href="https://www.instagram.com/gui.scordeiro/" target="_blank" rel="external">
+                        <div id="s1" class="imgsocial"></div>
+                    </a>
+                    <a href="https://www.facebook.com/guilherme.cordeiro.56232" target="__blank" rel="external">
+                        <div id="s2" class="imgsocial"></div>
+                    </a>
+                </div>
+                <div class="iconsocial-linha">
+                    <a href="https://github.com/gui-cordeiro" target="__blank" rel="external">
+                        <div id="s3" class="imgsocial"></div>
+                    </a>
+                    <a href="https://linkedin.com/in/gui-cordeiro" target="__blank" rel="external">
+                        <div id="s4" class="imgsocial"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="telaloader">
+        <span class="loader"></span>
+    </div>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/footerBar.js"></script>
+    <script src="scripts/timer.js"></script>
+    <!--<script src="scripts/weather.js"></script>-->
+</body>
 </html>
