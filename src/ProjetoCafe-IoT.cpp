@@ -13,8 +13,8 @@
 WiFiUDP udp;
 NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);
 
-const char *ssid = "TP-Link Repetidor";
-const char *senha = "onetech@987x";
+const char *ssid = "insira_sua_ssid";
+const char *senha = "insira_sua_senha";
 
 char diasDaSemana[7][14] = {"Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
 char mesesCorretos[12][10] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
