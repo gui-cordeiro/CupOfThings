@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Hash.h>
 #include "FS.h"
+#include "LittleFS.h"
 #include <NTPClient.h>
 #include <ESPAsyncTCP.h>
 #include "ESPAsyncWebServer.h"
@@ -13,8 +14,8 @@
 WiFiUDP udp;
 NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);
 
-const char *ssid = "insira_sua_ssid";
-const char *senha = "insira_sua_senha";
+const char *ssid = "ssid";
+const char *senha = "password";
 
 char diasDaSemana[7][14] = {"Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
 char mesesCorretos[12][10] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
@@ -42,8 +43,7 @@ unsigned long delayRele = 0;
 unsigned long horaSerial = 0;
 unsigned long tempoAlarme = 0;
 unsigned long delayEnvio = 0;
-
-int duracao_Cafe = 15; //Define o tempo em que a cafeteira permanecerá ligada
+unsigned long duracao_Cafe = 15; //Define o tempo em que a cafeteira permanecerá ligada
 
 boolean cont = false;
 
@@ -146,198 +146,198 @@ String montarAgenda(){
 void iniciarWebServer(){
   // Carregando os documentos HTML
   server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest *request){ // Página principal da Cafeteira
-    request->send(SPIFFS, "/index.html", String(), false, configSwitch);
+    request->send(LittleFS, "/index.html", String(), false, configSwitch);
   });
 
   server.on("/agendar.html", HTTP_GET, [](AsyncWebServerRequest *request){ // Página do Agendamento da Cafeteira
-    request->send(SPIFFS, "/agendar.html", String(), false, configAgendamento);
+    request->send(LittleFS, "/agendar.html", String(), false, configAgendamento);
   });
   
   server.on("/config.html", HTTP_GET, [](AsyncWebServerRequest *request){ // Página das Configurações da Cafeteira
-    request->send(SPIFFS, "/config.html", String(), false);
+    request->send(LittleFS, "/config.html", String(), false);
   });
   
   // Carregando os documentos CSS
   server.on("/estilos/agendar.css", HTTP_GET, [](AsyncWebServerRequest *request){ 
-    request->send(SPIFFS, "/estilos/agendar.css", "text/css");
+    request->send(LittleFS, "/estilos/agendar.css", "text/css");
   });
 
   server.on("/estilos/footerBar.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/footerBar.css", "text/css");
+    request->send(LittleFS, "/estilos/footerBar.css", "text/css");
   });
 
   server.on("/estilos/layout.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/layout.css", "text/css");
+    request->send(LittleFS, "/estilos/layout.css", "text/css");
   });
 
   server.on("/estilos/menu.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/menu.css", "text/css");
+    request->send(LittleFS, "/estilos/menu.css", "text/css");
   });
 
   server.on("/estilos/switch.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/switch.css", "text/css");
+    request->send(LittleFS, "/estilos/switch.css", "text/css");
   });
 
   server.on("/estilos/timer.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/timer.css", "text/css");
+    request->send(LittleFS, "/estilos/timer.css", "text/css");
   });
 
   // Carregando os documentos Javascript
   server.on("/scripts/footerBar.js", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/scripts/footerBar.js", "text/javascript");
+    request->send(LittleFS, "/scripts/footerBar.js", "text/javascript");
   });
 
   server.on("/scripts/menu.js", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/scripts/menu.js", "text/javascript");
+    request->send(LittleFS, "/scripts/menu.js", "text/javascript");
   });
 
   server.on("/scripts/timer.js", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/scripts/timer.js", "text/javascript");
+    request->send(LittleFS, "/scripts/timer.js", "text/javascript");
   });
 
   server.on("/scripts/weather.js", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/scripts/weather.js", "text/javascript");
+    request->send(LittleFS, "/scripts/weather.js", "text/javascript");
   });
 
   // Carregando os documentos de imagem
   server.on("/icons/clima/01d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/01d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/01d.png", "image/png");
   });
 
   server.on("/icons/clima/01n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/01n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/01n.png", "image/png");
   });
 
   server.on("/icons/clima/02d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/02d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/02d.png", "image/png");
   });
 
   server.on("/icons/clima/02n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/02n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/02n.png", "image/png");
   });
 
   server.on("/icons/clima/03d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/03d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/03d.png", "image/png");
   });
 
   server.on("/icons/clima/03n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/03n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/03n.png", "image/png");
   });
 
   server.on("/icons/clima/04d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/04d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/04d.png", "image/png");
   });
 
   server.on("/icons/clima/04n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/04n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/04n.png", "image/png");
   });
 
   server.on("/icons/clima/09d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/09d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/09d.png", "image/png");
   });
 
   server.on("/icons/clima/09n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/09n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/09n.png", "image/png");
   });
 
   server.on("/icons/clima/10d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/10d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/10d.png", "image/png");
   });
 
   server.on("/icons/clima/10n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/10n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/10n.png", "image/png");
   });
 
   server.on("/icons/clima/11d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/11d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/11d.png", "image/png");
   });
 
   server.on("/icons/clima/11n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/11n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/11n.png", "image/png");
   });
 
   server.on("/icons/clima/13d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/13d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/13d.png", "image/png");
   });
 
   server.on("/icons/clima/13n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/13n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/13n.png", "image/png");
   });
 
   server.on("/icons/clima/50d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/50d.png", "image/png");
+    request->send(LittleFS, "/icons/clima/50d.png", "image/png");
   });
 
   server.on("/icons/clima/50n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/50n.png", "image/png");
+    request->send(LittleFS, "/icons/clima/50n.png", "image/png");
   });
 
   server.on("/icons/clima/unknown.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/clima/unknown.png", "image/png");
+    request->send(LittleFS, "/icons/clima/unknown.png", "image/png");
   });
 
   server.on("/icons/outros/delete.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/outros/delete.png", "image/png");
+    request->send(LittleFS, "/icons/outros/delete.png", "image/png");
   });
 
   server.on("/icons/social/Facebook.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/Facebook.png", "image/png");
+    request->send(LittleFS, "/icons/social/Facebook.png", "image/png");
   });
 
   server.on("/icons/social/GitHub.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/GitHub.png", "image/png");
+    request->send(LittleFS, "/icons/social/GitHub.png", "image/png");
   });
 
   server.on("/icons/social/Instagram.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/Instagram.png", "image/png");
+    request->send(LittleFS, "/icons/social/Instagram.png", "image/png");
   });
 
   server.on("/icons/social/LinkedIn.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/LinkedIn.png", "image/png");
+    request->send(LittleFS, "/icons/social/LinkedIn.png", "image/png");
   });
 
   server.on("/icons/social/Twitter.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/Twitter.png", "image/png");
+    request->send(LittleFS, "/icons/social/Twitter.png", "image/png");
   });
 
   server.on("/icons/social/hover/Facebook.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/hover/Facebook.png", "image/png");
+    request->send(LittleFS, "/icons/social/hover/Facebook.png", "image/png");
   });
 
   server.on("/icons/social/hover/GitHub.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/hover/GitHub.png", "image/png");
+    request->send(LittleFS, "/icons/social/hover/GitHub.png", "image/png");
   });
 
   server.on("/icons/social/hover/Instagram.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/hover/Instagram.png", "image/png");
+    request->send(LittleFS, "/icons/social/hover/Instagram.png", "image/png");
   });
 
   server.on("/icons/social/hover/LinkedIn.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/hover/LinkedIn.png", "image/png");
+    request->send(LittleFS, "/icons/social/hover/LinkedIn.png", "image/png");
   });
 
   server.on("/icons/social/hover/Twitter.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/icons/social/hover/Twitter.png", "image/png");
+    request->send(LittleFS, "/icons/social/hover/Twitter.png", "image/png");
   });
 
   server.on("/imagens/9-01.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/imagens/9-01.png", "image/png");
+    request->send(LittleFS, "/imagens/9-01.png", "image/png");
   });
 
   server.on("/imagens/gif2.gif", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/imagens/gif2.gif", "image/gif");
+    request->send(LittleFS, "/imagens/gif2.gif", "image/gif");
   });
 
   server.on("/imagens/index.gif", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/imagens/index.gif", "image/gif");
+    request->send(LittleFS, "/imagens/index.gif", "image/gif");
   });
 
   server.on("/imagens/menu.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/imagens/menu.png", "image/png");
+    request->send(LittleFS, "/imagens/menu.png", "image/png");
   });
 
   server.on("/imagens/perfil/foto_perfil.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/imagens/perfil/foto_perfil.png", "image/png");
+    request->send(LittleFS, "/imagens/perfil/foto_perfil.png", "image/png");
   });
 
   // Irá captar o estado do botão da página inicial (Ligado/Desligado)
@@ -373,9 +373,9 @@ void iniciarWebServer(){
     mm = request->getParam("Minuto")->value();
     input = request->getParam("Lembrete")->value();
 
-    Serial.printf("Horário definido no Web Server: *%d:%d*\n", hh, mm);
+    Serial.println("Horário definido no Web Server: *" + hh + ":" + mm + "*");
     
-    request->send(SPIFFS, "/agendar.html", String(), false, configAgendamento);
+    request->send(LittleFS, "/agendar.html", String(), false, configAgendamento);
   });
 
   // Irá apagar o agendamento atual
@@ -383,7 +383,7 @@ void iniciarWebServer(){
 
     hh = "";
     mm = "";
-    request->send(SPIFFS, "/agendar.html", String(), false, configAgendamento);
+    request->send(LittleFS, "/agendar.html", String(), false, configAgendamento);
   });
 
   server.on("/opcao", HTTP_GET, [] (AsyncWebServerRequest *request){
@@ -393,7 +393,7 @@ void iniciarWebServer(){
     Serial.print(msg);
     Serial.println(" minutos.");
     
-    request->send(SPIFFS, "/config.html", String(), false);
+    request->send(LittleFS, "/config.html", String(), false);
   });
 
   server.on("/atualizarCafe", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -452,8 +452,11 @@ void configurarWifi(){
 
 //Função Setup
 void setup(){
-  // Iniciando memória SPIFFS para obter os arquivos web
-  SPIFFS.begin();
+  // Iniciando memória LittleFS para obter os arquivos web
+  do{
+    Serial.println("Erro ao inicializar o LittleFS...");
+    delay(1000);
+  }while(!LittleFS.begin());
 
   // Iniciando monitor serial
   Serial.begin(115200);
