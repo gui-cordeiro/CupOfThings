@@ -8,6 +8,8 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 
+#include <interface.h>
+
 WiFiUDP udp;
 NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);
 
