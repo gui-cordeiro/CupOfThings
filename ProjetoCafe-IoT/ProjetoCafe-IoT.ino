@@ -1,47 +1,31 @@
-// Inserindo bibliotecas
 #include <Arduino.h>
 #include <Hash.h>
 #include "FS.h"
-#include <Wire.h> //Biblioteca da comunicação I2C
-#include "RTClib.h" //Biblioteca do RTC
-#include <NTPClient.h> //Biblioteca do NTP.
-#include "ESP8266WiFi.h" //Biblioteca do WiFi.
+#include <NTPClient.h>
 #include <ESPAsyncTCP.h>
-#include "ESPAsyncWebServer.h" //Biblioteca do Servidor Web Assíncrono
-#include <ESP8266WiFi.h> //lib do wifi para o ESP8266
+#include "ESPAsyncWebServer.h"
+#include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 
-//Criando objeto do RTC
-RTC_DS3231 rtc;
-
-//Cria um objeto "UDP".
 WiFiUDP udp;
+NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);
 
-// Criando e configurando o objeto do NTP
-NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);//Cria um objeto "NTP" com as configurações.
-
-// ************ Configurações do Wi-Fi 1 ************
-const char *ssid = "OneTech_casa 19";
+const char *ssid = "TP-Link Repetidor";
 const char *senha = "onetech@987x";
 
-// Criando vetores para printar os dias da semana e os meses corretamente
 char diasDaSemana[7][14] = {"Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
 char mesesCorretos[12][10] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
                               "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
-// Criando variáveis do relógio
-int dia = 0;
-int mes = 0;
+int dia, mes, ano, hora, minuto, segundo;
+/*int mes = 0;
 int ano = 0;
 int hora = 0;
 int minuto = 0;
-int segundo = 0;
-int ajustarDOW = 0;
-String dOW = ""; //"dOW" significa "dayOfWeek"
-String mC = ""; //"mC" significa "mesCerto"
+int segundo = 0;*/
 
-//Criando variáveis para receber valores do WebServer
+
 String input = "off";
 String hh = "";
 String mm = "";
@@ -50,8 +34,6 @@ String hora_I = "";
 String minuto_I = "";
 
 int i = 0;
-
-int alarme_cont = 0;
 
 unsigned long delayWifi = 0;
 unsigned long delayRele = 0;
@@ -69,22 +51,16 @@ boolean cont = false;
 // Definindo a porta D6 para o relê (GPIO12)
 #define rele 12
 
-// Definindo a porta D7 para o LED (GPIO13)
-#define led 13
-
 boolean estadoBotao = true;
 boolean estadoAntBotao = true;
 
-//Definindo nomes dos métodos GET
 const char* PARAM_INPUT = "rele";
-
 const char* PARAM_ESTADO = "agendar";
 const char* PARAM_APAGAR = "apagar";
 
-// Criando um objeto do tipo "AsyncWebServer" na porta 80
 AsyncWebServer server(80);
 
-//Configurando a informação dinânica do estado do botão
+//Configurando a informação dinâmica do estado do botão
 String configSwitch(const String& var){
   if(var == "ESTADODORELE"){
     String estado = "";
@@ -165,51 +141,8 @@ String montarAgenda(){
   return msg;
 }
 
-String cabecalho(){
-  String msg = "";
-
-  String diaStr = String(dia, DEC);
-  String mesStr = String(mes + 1, DEC);
-  String anoStr = String(ano, DEC);
-  String horaStr = String(hora, DEC);
-  String minutoStr = String(minuto, DEC);
-  String segundoStr = String(segundo, DEC);
-  
-  if(hora >= 0 && hora < 12){
-    msg = "<p>Bom dia!";
-  }else if(hora >=12 && hora < 18){
-    msg += "<p>Boa tarde!";
-  }else{
-    msg += "<p>Boa noite!";
-  }
-
-  msg += " Hoje é " + dOW + ", ";
-  if(dia < 10){
-    msg += "0";
-  }
-  msg += "" + diaStr + "/";
-  if(mes < 10){
-    msg += "0";
-  }
-  msg += "" + mesStr + "/" + anoStr + " - ";  
-  if(hora < 10){
-    msg += "0";
-  }
-  msg += "" + horaStr + ":";
-  if(minuto < 10){
-    msg += "0";
-  }
-  msg += "" + minutoStr + ":";
-  if(segundo < 10){
-    msg += "0";
-  }
-  msg += "" + segundoStr + "</p>";
-  
-  return msg;
-}
-
 void iniciarWebServer(){
-  // Carregando as páginas HTML
+  // Carregando os documentos HTML
   server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest *request){ // Página principal da Cafeteira
     request->send(SPIFFS, "/index.html", String(), false, configSwitch);
   });
@@ -223,50 +156,192 @@ void iniciarWebServer(){
   });
   
   // Carregando os documentos CSS
-  server.on("/estilos/estilo.css", HTTP_GET, [](AsyncWebServerRequest *request){ 
-    request->send(SPIFFS, "/estilos/estilo.css", "text/css");
+  server.on("/estilos/agendar.css", HTTP_GET, [](AsyncWebServerRequest *request){ 
+    request->send(SPIFFS, "/estilos/agendar.css", "text/css");
   });
 
-  server.on("/estilos/normalize.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/normalize.css", "text/css");
+  server.on("/estilos/footerBar.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/estilos/footerBar.css", "text/css");
   });
 
-  server.on("/estilos/cafe_MQ.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/cafe_MQ.css", "text/css");
+  server.on("/estilos/layout.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/estilos/layout.css", "text/css");
   });
 
-  server.on("/estilos/agendar_MQ.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/agendar_MQ.css", "text/css");
+  server.on("/estilos/menu.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/estilos/menu.css", "text/css");
   });
 
-  server.on("/estilos/config_MQ.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/estilos/config_MQ.css", "text/css");
+  server.on("/estilos/switch.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/estilos/switch.css", "text/css");
   });
 
-  // Carregando o documento Javascript
-  server.on("/scripts/script.js", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/scripts/script.js", "text/javascript");
-  });
-  
-  server.on("/imagens/cafe.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/imagens/cafe.png", "image/png");
+  server.on("/estilos/timer.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/estilos/timer.css", "text/css");
   });
 
-  server.on("/imagens/engrenagem.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/imagens/engrenagem.png", "image/png");
+  // Carregando os documentos Javascript
+  server.on("/scripts/footerBar.js", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/scripts/footerBar.js", "text/javascript");
   });
 
-  // *****************************************************************************************************
-  // *                                                                                                   *
-  // *                                     Requisições da Cafeteira                                      *
-  // *                                                                                                   *
-  // *****************************************************************************************************
+  server.on("/scripts/menu.js", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/scripts/menu.js", "text/javascript");
+  });
+
+  server.on("/scripts/timer.js", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/scripts/timer.js", "text/javascript");
+  });
+
+  server.on("/scripts/weather.js", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/scripts/weather.js", "text/javascript");
+  });
+
+  // Carregando os documentos de imagem
+  server.on("/icons/clima/01d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/01d.png", "image/png");
+  });
+
+  server.on("/icons/clima/01n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/01n.png", "image/png");
+  });
+
+  server.on("/icons/clima/02d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/02d.png", "image/png");
+  });
+
+  server.on("/icons/clima/02n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/02n.png", "image/png");
+  });
+
+  server.on("/icons/clima/03d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/03d.png", "image/png");
+  });
+
+  server.on("/icons/clima/03n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/03n.png", "image/png");
+  });
+
+  server.on("/icons/clima/04d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/04d.png", "image/png");
+  });
+
+  server.on("/icons/clima/04n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/04n.png", "image/png");
+  });
+
+  server.on("/icons/clima/09d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/09d.png", "image/png");
+  });
+
+  server.on("/icons/clima/09n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/09n.png", "image/png");
+  });
+
+  server.on("/icons/clima/10d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/10d.png", "image/png");
+  });
+
+  server.on("/icons/clima/10n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/10n.png", "image/png");
+  });
+
+  server.on("/icons/clima/11d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/11d.png", "image/png");
+  });
+
+  server.on("/icons/clima/11n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/11n.png", "image/png");
+  });
+
+  server.on("/icons/clima/13d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/13d.png", "image/png");
+  });
+
+  server.on("/icons/clima/13n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/13n.png", "image/png");
+  });
+
+  server.on("/icons/clima/50d.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/50d.png", "image/png");
+  });
+
+  server.on("/icons/clima/50n.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/50n.png", "image/png");
+  });
+
+  server.on("/icons/clima/unknown.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/clima/unknown.png", "image/png");
+  });
+
+  server.on("/icons/outros/delete.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/outros/delete.png", "image/png");
+  });
+
+  server.on("/icons/social/Facebook.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/Facebook.png", "image/png");
+  });
+
+  server.on("/icons/social/GitHub.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/GitHub.png", "image/png");
+  });
+
+  server.on("/icons/social/Instagram.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/Instagram.png", "image/png");
+  });
+
+  server.on("/icons/social/LinkedIn.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/LinkedIn.png", "image/png");
+  });
+
+  server.on("/icons/social/Twitter.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/Twitter.png", "image/png");
+  });
+
+  server.on("/icons/social/hover/Facebook.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/hover/Facebook.png", "image/png");
+  });
+
+  server.on("/icons/social/hover/GitHub.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/hover/GitHub.png", "image/png");
+  });
+
+  server.on("/icons/social/hover/Instagram.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/hover/Instagram.png", "image/png");
+  });
+
+  server.on("/icons/social/hover/LinkedIn.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/hover/LinkedIn.png", "image/png");
+  });
+
+  server.on("/icons/social/hover/Twitter.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/icons/social/hover/Twitter.png", "image/png");
+  });
+
+  server.on("/imagens/9-01.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/imagens/9-01.png", "image/png");
+  });
+
+  server.on("/imagens/gif2.gif", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/imagens/gif2.gif", "image/gif");
+  });
+
+  server.on("/imagens/index.gif", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/imagens/index.gif", "image/gif");
+  });
+
+  server.on("/imagens/menu.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/imagens/menu.png", "image/png");
+  });
+
+  server.on("/imagens/perfil/foto_perfil.png", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/imagens/perfil/foto_perfil.png", "image/png");
+  });
 
   // Irá captar o estado do botão da página inicial (Ligado/Desligado)
   server.on("/estadoCafe", HTTP_GET, [] (AsyncWebServerRequest *request) {
     String inputMessage;
     String inputParam;
-    // GET input values on <ESP_IP>/update
     if (request->hasParam(PARAM_INPUT)) {
       inputMessage = request->getParam(PARAM_INPUT)->value();
       inputParam = PARAM_INPUT;
@@ -274,12 +349,10 @@ void iniciarWebServer(){
       if(inputMessage == "1"){
         Serial.print("\nLigando! ");
         digitalWrite(rele, HIGH);
-        digitalWrite(led, HIGH);
       }
       else{
         Serial.print("\nDesligando! ");
         digitalWrite(rele, LOW);
-        digitalWrite(led, LOW);
         cont = false;
       }
     }
@@ -298,11 +371,7 @@ void iniciarWebServer(){
     mm = request->getParam("Minuto")->value();
     input = request->getParam("Lembrete")->value();
 
-    Serial.print("Horário definido no Web Server: *");
-    Serial.print(hh);
-    Serial.print(":");
-    Serial.print(mm);
-    Serial.println("*");
+    Serial.printf("Horário definido no Web Server: *%d:%d*\n", hh, mm);
     
     request->send(SPIFFS, "/agendar.html", String(), false, configAgendamento);
   });
@@ -318,9 +387,9 @@ void iniciarWebServer(){
   server.on("/opcao", HTTP_GET, [] (AsyncWebServerRequest *request){
     String msg = request->getParam("Tempo")->value();
     duracao_Cafe = (msg.toInt() * 60) * 1000;
-    Serial.print("Configuração alterada! A cafeteira estará ligada por ");
+    Serial.print("Cafeteira ligada! Tempo restante: ");
     Serial.print(msg);
-    Serial.println(" minutos a partir de agora!");
+    Serial.println(" minutos.");
     
     request->send(SPIFFS, "/config.html", String(), false);
   });
@@ -334,17 +403,11 @@ void iniciarWebServer(){
     request->send(200, "text/plain", msg);
   });
 
-  server.on("/data", HTTP_GET, [](AsyncWebServerRequest *request){
-    String msg = cabecalho();
-    request->send(200, "text/plain", msg);
-  });
-
   server.on("/cancelar", HTTP_GET, [](AsyncWebServerRequest *request){
     String msg = botaoCancelar();
     request->send(200, "text/plain", msg);
   });
-  
-  // Iniciando o Web Server
+
   server.begin();
 }
 
@@ -359,171 +422,58 @@ void ajustarHora(){
   hora = ntp.getHours();
   minuto = ntp.getMinutes();
   segundo = ntp.getSeconds();
-
-  rtc.adjust(DateTime(ano, mes, dia, hora, minuto, segundo));
-}
-
-void valorHora(){
-  DateTime agora = rtc.now(); //Inicia o objeto DateTime
-  
-  dia = agora.day(); //Captura o dia;
-  mes = agora.month(); //Captura o mês;
-  mC = mesesCorretos[mes]; //Corrige o mês;
-  ano = agora.year(); //Captura o ano
-  
-  hora = agora.hour(); //Captura a hora
-  minuto = agora.minute(); //Captura o minuto
-  segundo = agora.second(); //Captura o segundo
-
-  ajustarDOW = agora.dayOfTheWeek() + 3;
-  if(ajustarDOW > 6){
-    ajustarDOW -= 7;
-  }
-  
-  dOW = diasDaSemana[ajustarDOW];
-
-  hora_I = String(hora, DEC);
-  minuto_I = String(minuto, DEC);
-
-  
-  Serial.print(dOW);
-  Serial.print(", ");
-  if(dia < 10){
-    Serial.print("0");
-  }
-  Serial.print(dia);
-  Serial.print(" de ");
-  Serial.print(mC);
-  Serial.print(" de ");
-  Serial.print(ano);
-
-  Serial.print(" - ");
-  
-  if(hora < 10){
-    Serial.print("0");
-  }
-  Serial.print(hora);
-  Serial.print(":");
-  if(minuto < 10){
-    Serial.print("0");
-  }
-  Serial.print(minuto);
-  Serial.print(":");
-  if(segundo < 10){
-    Serial.print("0");
-  }
-  Serial.println(segundo);
-}
-
-void pularLinha1(){
-  Serial.println();
-  Serial.println();
-  Serial.println();
-  Serial.println();
-  Serial.println("-----------------------------------------------------");
-}
-
-void pularLinha2(){
-  Serial.println("-----------------------------------------------------");
-  Serial.println();
-  Serial.println();
-  Serial.println();
-  Serial.println();
 }
 
 void configurarWifi(){
-  // Conecta ao wifi com IP estático
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, senha); 
-  Serial.println();
-  Serial.println();
-  Serial.println();
   delayWifi = millis();
   Serial.print("Conectando ao WiFi...");
   do{
-    if((millis() - delayWifi) < 500){
-      digitalWrite(led, HIGH);
-    }
-    if((millis() - delayWifi) >= 500){
-      digitalWrite(led, LOW);
-    }
     if((millis() - delayWifi) >= 1000){
       Serial.print(".");
       delayWifi = millis();
     }
   }while (WiFi.waitForConnectResult() != WL_CONNECTED);
-  digitalWrite(led, LOW);
-  Serial.println();
-
-  for(int pisca = 0; pisca <= 3; pisca ++){
-    digitalWrite(led, HIGH);
-    delay(100);
-    digitalWrite(led, LOW);
-    delay(100);
-  }
-  
+    
   // Escreve o IP Local do NodeMCU
   Serial.print("Wi-fi conectado! Acesse '");
   Serial.print(WiFi.localIP());
   Serial.println("/index.html' para entrar!");
   Serial.print("Canal Wi-Fi utilizado: ");
   Serial.println(WiFi.channel());
-  Serial.println();
-  Serial.println();
   
   // Iniciando a configuração do protocolo NTP
   ntp.begin(); //Inicia o NTP.
   ntp.forceUpdate(); //Força o Update.
-
-  // iniciando a configuração do Módulo RTC 
-  if(rtc.begin()){
-    
-    ajustarHora();
-  }else{
-    Serial.println("Erro ao iniciar o RTC3231! Reiniciando NodeMCU...");
-    delay(5000);
-    ESP.restart();
-  }
 }
 
 //Função Setup
 void setup(){
-  //Inicializando os pinos D1 e D2 para comunicação I2C
-  Wire.begin(D1, D2);
-
-  duracao_Cafe = (duracao_Cafe * 60) * 1000;
-
+  // Iniciando memória SPIFFS para obter os arquivos web
   SPIFFS.begin();
-  
+
   // Iniciando monitor serial
   Serial.begin(115200);
 
   // Definindo estado das portas referentes ao relê, botão e LED
   pinMode(rele, OUTPUT);
   pinMode(botao, INPUT_PULLUP);
-  pinMode(led, OUTPUT);
   digitalWrite(rele, LOW);
-  digitalWrite(led, LOW);
 
+  duracao_Cafe = (duracao_Cafe * 60) * 1000;
+  
   configurarWifi();   // Configura e inicializa o WiFi
   iniciarWebServer(); // Configura e inicializa o Web Server  
-
   Serial.println();
 }
 
 //Função Loop
 void loop(){  
-  //Imprime no monitor Serial a hora atual
-  if((millis() - horaSerial) >= 1000){
-    valorHora();
-    horaSerial = millis();
-  }
-  
   estadoBotao = digitalRead(botao);
   if(!estadoBotao && estadoAntBotao){
     if(digitalRead(rele) == HIGH){
       digitalWrite(rele, LOW);
-      digitalWrite(led, LOW);
       cont = false;
     }else{
       digitalWrite(rele, HIGH);
@@ -532,13 +482,11 @@ void loop(){
   estadoAntBotao = estadoBotao;
   
   if(((hora == 00) && (minuto == 00)) && ((segundo == 00)||(ano < 2020))){
-  
-    pularLinha1();
-    Serial.println("Hora da manutenção! Sincronizando relógio...");
-    delay(1000);
+    Serial.println("Atualizando relógio...");
+    horaSerial = millis();
+    while((millis() - horaSerial) <= 1000){}
     ajustarHora();
-    Serial.println("Hora sincronizada com sucesso!");
-    pularLinha2();
+    Serial.println("Atualização concluída.");
   }
 
   if(((hora_I == hh) && (minuto_I == mm)) && (segundo == 00)){
@@ -549,16 +497,14 @@ void loop(){
     if(!cont){
       delayRele = millis();
       cont = true;
-      digitalWrite(led, HIGH);
     }
     if((millis() - delayRele) >= duracao_Cafe){
       digitalWrite(rele, LOW);
       cont = false;
       Serial.println("O café está pronto!");
       Serial.println();
-      digitalWrite(led, LOW);
     }
   }
   
-  delay(50);
+  delay(10);
 }
