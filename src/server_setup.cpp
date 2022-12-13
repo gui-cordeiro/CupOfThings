@@ -1,94 +1,38 @@
 #include <Arduino.h>
 #include <Hash.h>
-#include "FS.h"
 #include "LittleFS.h"
 #include <NTPClient.h>
 #include <ESPAsyncTCP.h>
 #include "ESPAsyncWebServer.h"
-#include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
-#include <WiFiUdp.h>
 
+//Declarações
+#include <global_variables.h>
 #include <interface.h>
 
-WiFiUDP udp;
-NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);
-
-const char *ssid = "ssid";
-const char *senha = "password";
-
-char diasDaSemana[7][14] = {"Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
-char mesesCorretos[12][10] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
-                              "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
-
-int dia, mes, ano, hora, minuto, segundo;
-/*int mes = 0;
-int ano = 0;
-int hora = 0;
-int minuto = 0;
-int segundo = 0;*/
-
-
-String input = "off";
-String hh = "";
-String mm = "";
-
-String hora_I = "";
-String minuto_I = "";
-
-int i = 0;
-
-unsigned long delayWifi = 0;
-unsigned long delayRele = 0;
-unsigned long horaSerial = 0;
-unsigned long tempoAlarme = 0;
-unsigned long delayEnvio = 0;
-unsigned long duracao_Cafe = 15; //Define o tempo em que a cafeteira permanecerá ligada
-
-boolean cont = false;
-
-// Definindo a porta D5 para o botão (GPIO14)
-#define botao 14
+#define PARAM_INPUT "rele"
+#define PARAM_ESTADO "agendar"
+#define PARAM_APAGAR "apagar"
 
 // Definindo a porta D6 para o relê (GPIO12)
 #define rele 12
-
-boolean estadoBotao = true;
-boolean estadoAntBotao = true;
-
-const char* PARAM_INPUT = "rele";
-const char* PARAM_ESTADO = "agendar";
-const char* PARAM_APAGAR = "apagar";
 
 AsyncWebServer server(80);
 
 //Configurando a informação dinâmica do estado do botão
 String configSwitch(const String& var){
+  String estado = "";
   if(var == "ESTADODORELE"){
-    String estado = "";
     if(!digitalRead(rele)){
       estado += "<input type=\"checkbox\" class=\"liga-desliga__checkbox checkCafe\" id=\"liga-desliga\" onclick=\"botaoCafe();\" onchange=\"mudarEstadoCafe(this)\"/>";
     }else{
       estado += "<input type=\"checkbox\" class=\"liga-desliga__checkbox checkCafe\" id=\"liga-desliga\" onclick=\"botaoCafe();\" onchange=\"mudarEstadoCafe(this)\" checked/>";
     }
-    return estado;
   }
-  return String();
+  return estado;
 }
 
-String configAgendamento(const String& var){
-  if(var == "ESTADOAGENDAMENTO"){
-    String msg = montarAgenda();
-    return msg;
-  }
-  if(var == "BOTAOCANCELAR"){
-    String msg = botaoCancelar();
-    return msg;
-  }
-  return String();
-}
-
-String botaoCancelar(){
+/*String botaoCancelar(){
   String msg = "";
   if((hh != "")&&(mm != "")){
     msg += "<button class=\"btn btn-gray\" onclick=\"apagar();\">Cancelar agendamento</button>";
@@ -141,7 +85,19 @@ String montarAgenda(){
     msg += mm + " *</h2>";
   }
   return msg;
-}
+}*/
+
+/*String configAgendamento(const String& var){
+  if(var == "ESTADOAGENDAMENTO"){
+    String msg = montarAgenda();
+    return msg;
+  }
+  if(var == "BOTAOCANCELAR"){
+    String msg = botaoCancelar();
+    return msg;
+  }
+  return String();
+}*/
 
 void iniciarWebServer(){
   // Carregando os documentos HTML
@@ -150,7 +106,7 @@ void iniciarWebServer(){
   });
 
   server.on("/agendar.html", HTTP_GET, [](AsyncWebServerRequest *request){ // Página do Agendamento da Cafeteira
-    request->send(LittleFS, "/agendar.html", String(), false, configAgendamento);
+    request->send(LittleFS, "/agendar.html", String(), false);
   });
   
   server.on("/config.html", HTTP_GET, [](AsyncWebServerRequest *request){ // Página das Configurações da Cafeteira
@@ -366,7 +322,7 @@ void iniciarWebServer(){
   });
 
   
-  // Irá receber os dados do horário para agendamento
+  /*// Irá receber os dados do horário para agendamento
   server.on("/agendar", HTTP_GET, [] (AsyncWebServerRequest *request) {    
 
     hh = request->getParam("Hora")->value();
@@ -384,7 +340,7 @@ void iniciarWebServer(){
     hh = "";
     mm = "";
     request->send(LittleFS, "/agendar.html", String(), false, configAgendamento);
-  });
+  });*/
 
   server.on("/opcao", HTTP_GET, [] (AsyncWebServerRequest *request){
     String msg = request->getParam("Tempo")->value();
@@ -400,116 +356,15 @@ void iniciarWebServer(){
     request->send(200, "text/plain", String(digitalRead(rele)).c_str());
   });
 
-  server.on("/agendamento", HTTP_GET, [](AsyncWebServerRequest *request){
+  /*server.on("/agendamento", HTTP_GET, [](AsyncWebServerRequest *request){
     String msg = montarAgenda();
     request->send(200, "text/plain", msg);
-  });
+  });*/
 
-  server.on("/cancelar", HTTP_GET, [](AsyncWebServerRequest *request){
+  /*server.on("/cancelar", HTTP_GET, [](AsyncWebServerRequest *request){
     String msg = botaoCancelar();
     request->send(200, "text/plain", msg);
-  });
+  });*/
 
   server.begin();
-}
-
-void ajustarHora(){  
-  unsigned long epochTime = ntp.getEpochTime();
-  
-  struct tm *ptm = gmtime ((time_t *)&epochTime); //Gera o dia, mês e ano
-  dia = ptm->tm_mday; //Captura o dia;
-  mes = ptm->tm_mon; //Captura o mês + 1;
-  ano = ptm->tm_year+1900; //Soma o valor recebido com 1900 (gerando o ano atual)
-  
-  hora = ntp.getHours();
-  minuto = ntp.getMinutes();
-  segundo = ntp.getSeconds();
-}
-
-void configurarWifi(){
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, senha); 
-  delayWifi = millis();
-  Serial.print("Conectando ao WiFi...");
-  do{
-    if((millis() - delayWifi) >= 1000){
-      Serial.print(".");
-      delayWifi = millis();
-    }
-  }while (WiFi.waitForConnectResult() != WL_CONNECTED);
-    
-  // Escreve o IP Local do NodeMCU
-  Serial.print("Wi-fi conectado! Acesse '");
-  Serial.print(WiFi.localIP());
-  Serial.println("/index.html' para entrar!");
-  Serial.print("Canal Wi-Fi utilizado: ");
-  Serial.println(WiFi.channel());
-  
-  // Iniciando a configuração do protocolo NTP
-  ntp.begin(); //Inicia o NTP.
-  ntp.forceUpdate(); //Força o Update.
-}
-
-//Função Setup
-void setup(){
-  // Iniciando memória LittleFS para obter os arquivos web
-  do{
-    Serial.println("Erro ao inicializar o LittleFS...");
-    delay(1000);
-  }while(!LittleFS.begin());
-
-  // Iniciando monitor serial
-  Serial.begin(115200);
-
-  // Definindo estado das portas referentes ao relê, botão e LED
-  pinMode(rele, OUTPUT);
-  pinMode(botao, INPUT_PULLUP);
-  digitalWrite(rele, LOW);
-
-  duracao_Cafe = (duracao_Cafe * 60) * 1000;
-  
-  configurarWifi();   // Configura e inicializa o WiFi
-  iniciarWebServer(); // Configura e inicializa o Web Server  
-  Serial.println();
-}
-
-//Função Loop
-void loop(){  
-  estadoBotao = digitalRead(botao);
-  if(!estadoBotao && estadoAntBotao){
-    if(digitalRead(rele) == HIGH){
-      digitalWrite(rele, LOW);
-      cont = false;
-    }else{
-      digitalWrite(rele, HIGH);
-    }
-  }
-  estadoAntBotao = estadoBotao;
-  
-  if(((hora == 00) && (minuto == 00)) && ((segundo == 00)||(ano < 2020))){
-    Serial.println("Atualizando relógio...");
-    horaSerial = millis();
-    while((millis() - horaSerial) <= 1000){}
-    ajustarHora();
-    Serial.println("Atualização concluída.");
-  }
-
-  if(((hora_I == hh) && (minuto_I == mm)) && (segundo == 00)){
-    digitalWrite(rele, HIGH);
-  }
-
-  if(digitalRead(rele) == HIGH){
-    if(!cont){
-      delayRele = millis();
-      cont = true;
-    }
-    if((millis() - delayRele) >= duracao_Cafe){
-      digitalWrite(rele, LOW);
-      cont = false;
-      Serial.println("O café está pronto!");
-      Serial.println();
-    }
-  }
-  
-  delay(10);
 }
