@@ -109,6 +109,9 @@ void setup(){
 
   duracao_Cafe = (duracao_Cafe * 60) * 1000;
   
+  delay(1500);
+  requestFileToServer("/");
+
   configurarWifi();   // Configura e inicializa o WiFi
   iniciarWebServer(); // Configura e inicializa o Web Server  
   Serial.println();

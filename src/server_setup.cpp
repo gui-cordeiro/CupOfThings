@@ -19,6 +19,49 @@
 
 AsyncWebServer server(80);
 
+void requestImageToServer(String path, int countFiles, String imageFileExtension) {
+  for (int numFile = 1; numFile <= countFiles; numFile ++) {
+    static String fullPath;
+    static String imageFileType;
+    
+    fullPath = path + "/" + (String)numFile + "." + imageFileExtension;
+    imageFileType = "image/" + imageFileExtension;
+
+    server.on(fullPath.c_str(), HTTP_GET, [](AsyncWebServerRequest *request){
+      request->send(LittleFS, fullPath.c_str(), imageFileType.c_str());
+    });
+  }
+}
+
+void requestFileToServer(String path) {
+  String lastPath = path;
+  Dir dir = LittleFS.openDir(path.c_str());
+  String fileName = dir.fileName();
+  while(dir.next()) {
+    if (dir.isDirectory()) {
+      path += (path.equals("/")) ? dir.fileName() : "/" + dir.fileName();
+      requestFileToServer(path);
+      path = lastPath;
+    } else if (dir.isFile()) {
+      static String fullPath, fileExtension;
+      fullPath = path + dir.fileName();
+      fileExtension = dir.fileName().substring(dir.fileName().indexOf(".") + 1);
+      if(fileExtension.equals("html") || fileExtension.equals("css") || fileExtension.equals("js")) {
+        fileExtension = "text/" + fileExtension;
+      } else if(fileExtension.equals("png") || fileExtension.equals("jpg") || fileExtension.equals("gif") || fileExtension.equals("jpeg")) {
+        fileExtension = "image/" + fileExtension;
+      } else if(fileExtension.equals("mp3") || fileExtension.equals("ogg") || fileExtension.equals("wav") || fileExtension.equals("wma")) {
+        fileExtension = "audio/" + fileExtension;
+      } else if(fileExtension.equals("mp4") || fileExtension.equals("avi") || fileExtension.equals("m4v") || fileExtension.equals("mpg") || fileExtension.equals("mpeg")) {
+        fileExtension = "video/" + fileExtension;
+      server.on(fullPath.c_str(), HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(LittleFS, fullPath.c_str(), fileExtension.c_str());
+      });
+      }
+    }
+  }
+}
+
 //Configurando a informação dinâmica do estado do botão
 String configSwitch(const String& var){
   String estado = "";
@@ -101,7 +144,7 @@ String montarAgenda(){
 
 void iniciarWebServer(){
   // Carregando os documentos HTML
-  server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest *request){ // Página principal da Cafeteira
+  /*server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest *request){ // Página principal da Cafeteira
     request->send(LittleFS, "/index.html", String(), false, configSwitch);
   });
 
@@ -153,86 +196,12 @@ void iniciarWebServer(){
 
   server.on("/scripts/weather.js", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LittleFS, "/scripts/weather.js", "text/javascript");
-  });
+  });*/
 
   // Carregando os documentos de imagem
-  server.on("/icons/clima/01d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/01d.png", "image/png");
-  });
+  requestFileToServer("/");
 
-  server.on("/icons/clima/01n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/01n.png", "image/png");
-  });
-
-  server.on("/icons/clima/02d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/02d.png", "image/png");
-  });
-
-  server.on("/icons/clima/02n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/02n.png", "image/png");
-  });
-
-  server.on("/icons/clima/03d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/03d.png", "image/png");
-  });
-
-  server.on("/icons/clima/03n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/03n.png", "image/png");
-  });
-
-  server.on("/icons/clima/04d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/04d.png", "image/png");
-  });
-
-  server.on("/icons/clima/04n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/04n.png", "image/png");
-  });
-
-  server.on("/icons/clima/09d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/09d.png", "image/png");
-  });
-
-  server.on("/icons/clima/09n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/09n.png", "image/png");
-  });
-
-  server.on("/icons/clima/10d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/10d.png", "image/png");
-  });
-
-  server.on("/icons/clima/10n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/10n.png", "image/png");
-  });
-
-  server.on("/icons/clima/11d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/11d.png", "image/png");
-  });
-
-  server.on("/icons/clima/11n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/11n.png", "image/png");
-  });
-
-  server.on("/icons/clima/13d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/13d.png", "image/png");
-  });
-
-  server.on("/icons/clima/13n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/13n.png", "image/png");
-  });
-
-  server.on("/icons/clima/50d.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/50d.png", "image/png");
-  });
-
-  server.on("/icons/clima/50n.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/50n.png", "image/png");
-  });
-
-  server.on("/icons/clima/unknown.png", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/icons/clima/unknown.png", "image/png");
-  });
-
-  server.on("/icons/outros/delete.png", HTTP_GET, [](AsyncWebServerRequest *request){
+  /*server.on("/icons/outros/delete.png", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LittleFS, "/icons/outros/delete.png", "image/png");
   });
 
@@ -294,7 +263,7 @@ void iniciarWebServer(){
 
   server.on("/imagens/perfil/foto_perfil.png", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LittleFS, "/imagens/perfil/foto_perfil.png", "image/png");
-  });
+  });*/
 
   // Irá captar o estado do botão da página inicial (Ligado/Desligado)
   server.on("/estadoCafe", HTTP_GET, [] (AsyncWebServerRequest *request) {
