@@ -1,6 +1,6 @@
 void requestImageToServer(String path, int contFiles, String imageFileExtension);
 
-void requestFileToServer(String path);
+void requestAllFilesToServer(String path);
 
 String configSwitch(const String& var);
 

@@ -1,21 +1,15 @@
-extern int dia, mes, ano, hora, minuto, segundo;
+extern WiFiUDP udp;
+extern NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);
 
+extern int dia, mes, ano;
 
-extern String input;
-extern String hh;
-extern String mm;
+extern String hh; // Variável da hora definida do alarme
+extern String mm; // Variável do minuto definido do alarme
+extern String input; // Lembrete do alarme (Todos os dias/Um dia apenas)
 
-extern String hora_I;
-extern String minuto_I;
+extern unsigned long powerPlugInterval;
+extern unsigned long timeUpdateInterval;
+extern unsigned long initialSetupDelay;
+extern unsigned long coffeeDuration; //Define o tempo em que a cafeteira permanecerá ligada
 
-extern unsigned long delayWifi;
-extern unsigned long delayRele;
-extern unsigned long horaSerial;
-extern unsigned long tempoAlarme;
-extern unsigned long delayEnvio;
-extern unsigned long duracao_Cafe; //Define o tempo em que a cafeteira permanecerá ligada
-
-extern boolean cont;
-
-extern boolean estadoBotao;
-extern boolean estadoAntBotao;
+extern boolean powerPlugIsActive;
