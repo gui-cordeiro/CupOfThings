@@ -52,7 +52,7 @@ AsyncWebServer server(80);
 void iniciarWebServer(){
   // Preparando os documentos HTML
   server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/index.html", String(), false, configSwitch);
+    request->send(LittleFS, "/index.html", String(), false/*, configSwitch*/);
   });
   server.on("/agendar.html", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(LittleFS, "/agendar.html", String(), false);

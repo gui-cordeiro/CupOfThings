@@ -19,7 +19,11 @@ char mesesCorretos[12][10] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio",
 
 int dia, mes, ano;
 
-void ajustarHora(){  
+WiFiUDP udp;
+NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);
+
+void ajustarHora(){
+  ntp.update();
   unsigned long epochTime = ntp.getEpochTime();
   
   struct tm *ptm = gmtime ((time_t *)&epochTime); //Gera o dia, mês e ano
@@ -50,4 +54,15 @@ void configurarWifi(){
   // Iniciando a configuração do protocolo NTP
   ntp.begin(); //Inicia o NTP.
   ntp.forceUpdate(); //Força o Update.
+}
+
+int getNTPValue(String option) {
+  if (option.equals("hours")) {
+    return ntp.getHours();
+  } else if (option.equals("minutes")) {
+    return ntp.getMinutes();
+  } else if (option.equals("seconds")) {
+    return ntp.getSeconds();
+  }
+  return 0;
 }

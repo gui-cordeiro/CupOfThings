@@ -66,16 +66,15 @@ void setup() {
 }
 
 void loop(){  
-  if(((ntp.getHours() == 00) && (ntp.getMinutes() == 00)) && ((ntp.getSeconds() == 00)||(ano < 2020))){
+  if(((getNTPValue("hours") == 00) && (getNTPValue("minutes") == 00)) && ((getNTPValue("seconds") == 00)||(ano < 2020))){
     Serial.println("Atualizando relógio...");
-    ntp.update();
     timeUpdateInterval = millis();
     while((millis() - timeUpdateInterval) <= 1000){}
     ajustarHora();
     Serial.println("Atualização concluída.");
   }
 
-  if(((ntp.getHours() == hh.toInt()) && (ntp.getMinutes() == mm.toInt())) && (ntp.getSeconds() > 0 && ntp.getSeconds() < 1)) digitalWrite(relay, HIGH);
+  if(((getNTPValue("hours") == hh.toInt()) && (getNTPValue("minutes") == mm.toInt())) && (getNTPValue("seconds") > 0 && getNTPValue("seconds") < 1)) digitalWrite(relay, HIGH);
 
   if(digitalRead(relay)){
     if(!powerPlugIsActive){

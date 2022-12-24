@@ -1,6 +1,3 @@
-extern WiFiUDP udp;
-extern NTPClient ntp(udp, "a.st1.ntp.br", -3 * 3600, 60000);
-
 extern int dia, mes, ano;
 
 extern String hh; // Variável da hora definida do alarme

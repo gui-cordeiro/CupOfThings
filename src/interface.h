@@ -1,8 +1,6 @@
-void requestImageToServer(String path, int contFiles, String imageFileExtension);
+int getNTPValue(String option);
 
-void requestAllFilesToServer(String path);
-
-String configSwitch(const String& var);
+// String configSwitch(const String& var);
 
 String configAgendamento(const String& var);
 
