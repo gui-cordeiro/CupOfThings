@@ -10,8 +10,8 @@
 #include <global_variables.h>
 #include <interface.h>
 
-const char *ssid = "TATYBOOP";
-const char *senha = "taty1516";
+const char *ssid = "ssid";
+const char *senha = "password";
 
 char diasDaSemana[7][14] = {"Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
 char mesesCorretos[12][10] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
