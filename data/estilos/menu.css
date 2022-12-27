@@ -173,8 +173,8 @@ div#cont-menudivisao{
     margin: 0 10px;
     width: 3px;
     height: 120px;
-    border: 1px solid;
-    background-color: black;
+    border: 1px solid #453646;
+    background-color: #453646;
 }
 
 div#cont-menuweather{

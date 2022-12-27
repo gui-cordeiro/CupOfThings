@@ -5,7 +5,7 @@
     height: 186px;
     width: 186px;
     margin: 0px auto;
-    border: 6px solid hsl(296, 13%, 24%);
+    border: 6px solid #5B2E48;
     border-radius: 150px;
     opacity: 0;
     transition: opacity 1s .3s ease;
@@ -22,13 +22,13 @@
 .circular .inner{
     position: absolute;
     z-index: 2;
-    top: 50%;
-    left: 50%;
-    height: 80px;
-    width: 80px;
+    top: 55%;
+    left: 55%;
+    height: 70px;
+    width: 70px;
     margin: -40px 0 0 -40px;
     background-color: #E7D8C9;
-    border: 1px solid #453646;
+    border: 1px solid #5B2E48;
     border-radius: 100%;
 }
 
@@ -40,7 +40,7 @@
     height: fit-content;
     transform: translate(-50%, -50%);
     z-index: 3;
-    color: #753753;
+    color: #5B2E48;
     font: bold 17pt "Lobster Two";
 }
 
@@ -59,7 +59,7 @@
     width: 100%;
     border-radius: 100%;
     clip: rect(0px, 50px, 100px, 0px);
-    background-color: #753753;
+    background-color: #5B2E48;
 }
 
 .circle .left .progress{

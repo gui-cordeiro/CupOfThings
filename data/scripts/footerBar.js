@@ -1,21 +1,20 @@
-/*******************************************************************************/
 if(window.location.pathname.split("/")[window.location.pathname.split("/").length - 1] == "index.html"){
     document.querySelector("input#switch").addEventListener("click", infoTempoCafe)
 }
 
-var estado = 2 // 0) Desligado | 1) Ligado | 2) Café pronto
-var controle = 0 // 0) Pode mudar | 1) Não pode mudar
+let estado = 2 // 0) Desligado | 1) Ligado | 2) Café pronto
+let controle = 0 // 0) Pode mudar | 1) Não pode mudar
 
-var min = 0, seg = 30
-var tempoTotal = seg + (min * 60)
+let min = 5, seg = 0
+let tempoTotal = seg + (min * 60)
 
-var tmp_div = document.querySelector("div#tempo_popup")
+let tmp_div = document.querySelector("div#tempo_popup")
 
-var msgInicial = tmp_div.innerHTML
+let msgInicial = tmp_div.innerHTML
 
-var msgOn = "<div id=\"conteudo\"><p>Seu café está sendo feito, aguarde! Tempo restante: <span class=\"tempoRest\">01:30</span></p><div id=\"cobrir\"><div class=\"circular\"><div class=\"inner\"></div><div class=\"numb\">01:30</div><div class=\"circle\"><div class=\"bar left\"><div class=\"progress\"></div></div><div class=\"bar right\"><div id=\"delay\" class=\"progress\"></div></div></div></div></div><p id=\"msg\">Enquanto isso, aproveite para escutar uma musiquinha!</p><div id=\"spotify\"><iframe src=\"https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn\" width=\"320\" height=\"250\" frameborder=\"0\" allowtransparency=\"true\" allow=\"encrypted-media\"></iframe></div></div>"
+let msgOn = "<div id=\"conteudo\"><p>Preparando seu café! Tempo restante: <span class=\"tempoRest\">01:30</span></p><div id=\"cobrir\"><div class=\"circular\"><div class=\"inner\"></div><div class=\"numb\">01:30</div><div class=\"circle\"><div class=\"bar left\"><div class=\"progress\"></div></div><div class=\"bar right\"><div id=\"delay\" class=\"progress\"></div></div></div></div></div><p id=\"msg\">Enquanto isso, aproveite para escutar uma musiquinha!</p><div id=\"spotify\"><iframe src=\"https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn\" width=\"320\" height=\"320\" frameborder=\"0\" allowtransparency=\"true\" allow=\"encrypted-media\"></iframe></div></div>"
 
-var msgPronto = "<p>Obaaa! Seu café está pronto! ☕</p><div id=\"imgPronto\"><img src=\"imagens/9-01.jpg\" alt=\"\"></div><div id=\"lembrete\">Lembre-se de tomar um café da manhã reforçado. Aproveite seu café e tenha um bom dia!</div><div id=\"autoOff\">Sua cafeteira desligará automaticamente às: <div id=\"autoOffHora\">07:30</div></div>"
+let msgPronto = "<p>Seu café está pronto! ☕</p><div id=\"imgPronto\"><img src=\"imagens/9-01.jpg\" alt=\"\"></div><div id=\"lembrete\">Lembre-se de tomar um café da manhã reforçado. Aproveite seu café e tenha um bom dia!</div><div id=\"autoOff\">Sua cafeteira desligará automaticamente às: <div id=\"autoOffHora\">07:30</div></div>"
 
 /*******************************************************************************/
 
@@ -56,7 +55,7 @@ function infoTempoCafe(){
 // Função que irá diminuir a altura da barra inferior ao clicar no botão Switch
 function mudarEstado(tmp1, pausa, tmp2, corFundo, cor, msg){
     controle = 1 //Cafeteira ligada
-    var alt = 35
+    let alt = 35
     descer = setInterval(function(){
         if(tmp_div.style.height != `0px`){
             tmp_div.style.height = `${alt}px`
@@ -86,7 +85,7 @@ function trocarCont(pausa, tmp2, corFundo, cor, msg){
 
 //Função que irá aumentar a altura da barra inferior (Continuação da função 'trocarCont()')
 function subirBarra(tmp2){
-    var alt = -10
+    let alt = -10
     subir = setInterval(function(){
         if(tmp_div.style.height == `35px`){
             controle = 0
@@ -111,11 +110,11 @@ function mouseEnter(){
             document.querySelector("div#info").style.opacity = "1"
             document.querySelector("div#social").style.opacity = "1"
         }else if(estado == 1){
-            tmp_div.style.height = "550px"
+            tmp_div.style.height = "450px"
             document.querySelector("div#cobrir").style.opacity = "1"
             document.querySelector("p#msg").style.opacity = "1"
 
-            var circle = document.getElementsByClassName("progress")
+            let circle = document.getElementsByClassName("progress")
             circle[0].style.animationDuration = `${tempoTotal / 2}s`
             circle[1].style.animationDuration = `${tempoTotal / 2}s`
             document.getElementById("delay").style.animationDelay = `${tempoTotal / 2}s`
@@ -153,8 +152,8 @@ function mouseLeave(){
 /*******************************************************************************/
 
 function timer(){
-    var minTimer = min, segTimer = seg
-    var msg = ""
+    let minTimer = min, segTimer = seg
+    let msg = ""
     contagem = setInterval(() => {
         if(minTimer == 0 && segTimer == 0){
             telaPronto()
