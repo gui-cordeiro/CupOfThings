@@ -17,16 +17,6 @@ div#actual-coffee-state-hour{
     font: bold 30pt "Lobster Two";
 }
 
-div#agendar-cancel{
-    position: fixed;
-    bottom: 312px;
-    left: 240px;
-    width: 50px;
-    height: 50px;
-    line-height: 65px;
-    border-radius: 100%;
-}
-
 div#agenda{
     background-color: #472F3F;
     color: #E7D8C9;
@@ -73,17 +63,56 @@ div.btn:hover {
     border: 2px solid #E7D8C9;
 }
 
+div.agendar-cancel{
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    line-height: 65px;
+    border-radius: 100%;
+}
+
+#create-cancel {
+    bottom: 312px;
+    left: 240px;
+}
+
+#erase-cancel {
+    bottom: 330px;
+    left: 235px;
+}
+
+div#form p {
+    text-align: center;
+}
+
+span#warning {
+    display: inline-block;
+    background-color: #b30042;
+    padding: 2px 10px;
+    border-radius: 5px;
+}
+
 div#modal-delete-schedule{
     margin-top: 10px;
 }
 
-#fade, #modal {
+#fade, #modal, #modal-erase{
     transition: .4s;
     opacity: 1;
     pointer-events: all;
 }
 
 #fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 5;
+}
+
+#fade2 {
     position: fixed;
     top: 0;
     left: 0;
@@ -100,10 +129,7 @@ div#modal-delete-schedule{
     background-color: white;
     transform: translate(-50%, -50%); 
     z-index: 10;
-}
 
-div#modal{
-    background-color: white;
     color: #472F3F;
     font: normal 18pt "Amatic SC";
     width: 280px;
@@ -176,15 +202,35 @@ input[type="range"] {
 }
 
 #modal.hide,
-#fade.hide {
+#fade.hide,
+#modal-erase.hide {
     opacity: 0;
     pointer-events: none;
 }
 
-#modal.hide {
+#modal.hide,
+#modal-erase.hide {
     top: 0;
 }
 
-select#sel-diasSemana{
-    margin-top: 0px;
+#modal-erase {
+    position: fixed;
+    top: 54%;
+    left: 50%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    transform: translate(-50%, -50%); 
+    z-index: 10;
+
+    background-color: white;
+    color: #472F3F;
+    font: normal 18pt "Amatic SC";
+    width: 280px;
+    margin: 60px auto;
+    padding: 0 20px 20px 20px;
+    border-radius: 10px;
+    text-align: center;
+
+    margin-top: -35px;
 }

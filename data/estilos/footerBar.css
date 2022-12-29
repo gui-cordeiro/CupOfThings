@@ -151,12 +151,13 @@ div#s4:hover{
     background: url("../icons/social/hover/LinkedIn.png");
 }
 
-div#agendar-cancel{
+div.agendar-cancel{
+    transition: none;
     background: url("../icons/outros/cancel.png");
     background-repeat: no-repeat;
     background-size: 100%;
 }
-div#agendar-cancel:hover{
+div.agendar-cancel:hover{
     background: url("../icons/outros/hover/cancel.png");
     background-repeat: no-repeat;
     background-size: 100%;

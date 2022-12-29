@@ -1,15 +1,24 @@
 const openModalButton = document.querySelector("div#modal-new-schedule");
-const closeModalButton = document.querySelector("div#agendar-cancel");
+const closeModalButton = document.querySelector("div#create-cancel");
 const modal = document.querySelector("div#modal");
+
+const openEraseModalButton = document.querySelector("div#modal-delete-schedule");
+const closeEraseModalButton = document.querySelector("div#erase-cancel");
+const eraseModal = document.querySelector("div#modal-erase");
+
 const fade = document.querySelector("div#fade");
+const fade2 = document.querySelector("div#fade2");
 
 const toggleModal = () => {
-    [modal, fade].forEach((el) => el.classList.toggle("hide"));
+    [modal, eraseModal, fade, fade2].forEach((el) => el.classList.toggle("hide"));
 }
 
-[openModalButton, closeModalButton, fade].forEach((el) => {
+[openModalButton,openEraseModalButton, closeModalButton, closeEraseModalButton, fade].forEach((el) => {
     el.addEventListener("click", () => toggleModal());
 });
+
+
+
 
 let stateNRadio = document.querySelector("input#form-radio-no")
 let stateYRadio = document.querySelector("input#form-radio-yes")
@@ -19,20 +28,20 @@ stateYRadio.addEventListener("click", hideInfoDay)
 
 document.querySelector("input#slider").addEventListener("input", updateInfo)
 
-document.querySelector("input#form-radio-no").checked = "true"
+document.querySelector("input#form-radio-yes").checked = "true"
 
 function showInfoDay() {
     if (stateNRadio.checked) {
-        document.getElementById("form-days").style.display = "none";
-        document.querySelector("div#agendar-cancel").style.bottom = "312px"
+        document.getElementById("form-days").style.display = "block";
+        document.querySelector("div#create-cancel").style.bottom = "477px"
         
     }
 }
 
 function hideInfoDay() {
     if (stateYRadio.checked) {
-        document.getElementById("form-days").style.display = "block";
-        document.querySelector("div#agendar-cancel").style.bottom = "477px"
+        document.getElementById("form-days").style.display = "none";
+        document.querySelector("div#create-cancel").style.bottom = "312px"
     }
 }
 

@@ -38,9 +38,10 @@
     </main>
 
     <div id="fade" class="hide"></div>
+    <div id="fade2" class="hide"></div>
 
     <div id="modal" class="hide">
-        <div id="agendar-cancel" class="imgsocial"></div>
+        <div id="create-cancel" class="imgsocial agendar-cancel"></div>
         <div class="titulo">
             <h2>Criar Novo Horário</h2>
         </div>
@@ -65,12 +66,17 @@
                 </div>
             </div>
             <div id="modal-delete-schedule" class="btn">Confirmar</div>
-            
-            <!-- <select name="" id="sel-diasSemana" class="form-hora">
-                <option value="">Nos dias úteis</option>
-                <option value="">Nos fins de semana</option>
-                <option value="">Em todos os dias da semana</option>
-            </select> -->
+        </div>
+    </div>
+
+    <div id="modal-erase" class="hide">
+        <div id="erase-cancel" class="imgsocial agendar-cancel"></div>
+        <div class="titulo">
+            <h2>Confirmar Cancelamento</h2>
+        </div>
+        <div id="form">
+            <p>O agendamento atual será <span id="warning">deletado!</span></p>
+            <div id="modal-delete-schedule" class="btn">Confirmar</div>
         </div>
     </div>
 
