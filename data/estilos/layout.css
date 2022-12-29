@@ -81,9 +81,11 @@ main{
 
 main video#mp4{
     width: 75%;
+    margin: -20px 0 10px 0;
+    border: 0px solid;
 }
 
-main h2{
+div#titulo h2{
     font-weight: bold;
 }
 

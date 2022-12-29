@@ -1,9 +1,39 @@
+div#actual-coffee-state{
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 10px;
+    background-color: #E7D8C9;
+}
+
+div#actual-coffee-state-hour{
+    width: fit-content;
+    height: fit-content;
+    margin: 10px auto 0 auto;
+    border: 0px solid;
+    font: bold 30pt "Lobster Two";
+}
+
+div#agendar-cancel{
+    position: fixed;
+    bottom: 312px;
+    left: 240px;
+    width: 50px;
+    height: 50px;
+    line-height: 65px;
+    border-radius: 100%;
+}
+
 div#agenda{
     background-color: #472F3F;
     color: #E7D8C9;
     font: normal 18pt "Amatic SC";
-    width: 280px;
-    margin: 15px auto;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
     padding: 20px;
     border-radius: 10px;
     /*margin-bottom: 90px;*/
@@ -13,9 +43,16 @@ div#agenda p{
     margin: 0 auto 2px auto;
 }
 
-div#agenda_hora{
+div#agenda-hora{
     font: bold 24.5pt "Lobster Two";
-    margin: 2px auto 0 auto;
+    background-color: #E7D8C9;
+    color: #472F3F;
+    margin-top: 10px;
+    padding: 20px 10px 0 10px;
+    border: 2px dashed #472F3F;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
 }
 
 div.btn{
@@ -23,40 +60,55 @@ div.btn{
     background-color: #E7D8C9;
     color: #472F3F;
     border: 2px solid #472F3F;
+    border-radius: 150px;
     transition: all .2s ease;
     cursor: pointer;
-    margin-top: -25px;
-}
-
-div#btn-clean{
-    position: relative;
-    bottom: 87px;
-    left: 215px;
-    width: 60px;
-    height: 60px;
-    line-height: 65px;
-    text-align: center;
-    border-radius: 100%;
-}
-
-div#btn-clean img{
-    width: 25px;
-}
-
-div#btn-criar{
     padding: 10px;
-    margin: auto;
     text-align: center;
-    border-radius: 150px;
 }
 
-div#agenda-criar{
+div.btn:hover {
+    background-color: #472F3F;
+    color: #E7D8C9;
+    border: 2px solid #E7D8C9;
+}
+
+div#modal-delete-schedule{
+    margin-top: 10px;
+}
+
+#fade, #modal {
+    transition: .4s;
+    opacity: 1;
+    pointer-events: all;
+}
+
+#fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 5;
+}
+
+#modal {
+    position: fixed;
+    top: 54%;
+    left: 50%;
+    background-color: white;
+    transform: translate(-50%, -50%); 
+    z-index: 10;
+}
+
+div#modal{
     background-color: white;
     color: #472F3F;
     font: normal 18pt "Amatic SC";
     width: 280px;
     margin: 60px auto;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     border-radius: 10px;
     text-align: center;
 
@@ -64,7 +116,8 @@ div#agenda-criar{
 }
 
 div#form{
-    border: 1px dashed;
+    background-color: #472F3F;
+    color: #E7D8C9;
     border-radius: 10px;
     padding: 20px;
     text-align: left;
@@ -74,8 +127,62 @@ div.form-nome, div.form-hora{
     display: block;
 }
 
-div.form-hora{
-    margin: -10px 0 10px 0;
+div.form-config{
+    border-bottom: 1px solid #E7D8C9;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
+div.form-display-config{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+input[type="time"] {
+    background-color: #E7D8C9;
+    color: #472F3F;
+    width: 90px;
+    text-align: center;
+    font: normal 15pt 'Lobster Two';
+    border: 2px solid #472F3F;
+    border-radius: 10px;
+}
+
+div#form-description {
+    background-color: #a53860dc;
+    color: #E7D8C9;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: auto;
+    width: fit-content;
+}
+
+input[type="range"] {
+    margin-top: 10px;
+    transform: scale(1.1);
+}
+
+#form-days {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+    background-color: #E7D8C9;
+    color: #472F3F;
+    border-radius: 10px;
+    padding: 15px
+}
+
+#modal.hide,
+#fade.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#modal.hide {
+    top: 0;
 }
 
 select#sel-diasSemana{

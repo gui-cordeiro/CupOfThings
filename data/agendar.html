@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="estilos/menu.css">
     <link rel="stylesheet" href="estilos/footerBar.css">
     <link rel="stylesheet" href="estilos/timer.css">
+    <script src="scripts/menu.js" defer></script>
+    <script src="scripts/footerBar.js" defer></script>
+    <script src="scripts/timer.js" defer></script>
+    <script src="scripts/agendar.js" defer></script>
+    <!-- <script src="scripts/weather.js" defer></script> -->
 </head>
 <body>
     <header>
@@ -19,20 +24,57 @@
     <main>
         <div class="titulo">
             <h2>Agendar Horário</h2>
-            <p>Agende um horário para tomar aquele café sem preocupação!</p>
+            <p>Seu café quentinho, saboroso e pontual!</p>
         </div>
         <div id="video">
             <video src="imagens/agendar.mp4" id="mp4" autoplay loop></video>
         </div>
-    </main>
-    <div id="agenda">
-        <p>Sua cafeteira ligará:</p>
-        <div id="agenda_hora">Amanhã, às 06:30</div>
-        <div id="btn-clean" class="btn">
-            <img src="icons/outros/delete.png" alt="">
+        <div id="agenda">
+            <p>Sua cafeteira ligará:</p>
+            <div id="agenda-hora">Hoje, às 06:30</div>
+            <div id="modal-new-schedule" class="btn">Criar novo horário</div>
+            <div id="modal-delete-schedule" class="btn">Limpar horário</div>
         </div>
-        <div id="btn-criar" class="btn">Agendar horário</div>
+    </main>
+
+    <div id="fade" class="hide"></div>
+
+    <div id="modal" class="hide">
+        <div id="agendar-cancel" class="imgsocial"></div>
+        <div class="titulo">
+            <h2>Criar Novo Horário</h2>
+        </div>
+        <div id="form">
+            <div class="form-config form-display-config">
+                <div class="form-nome">Hora: </div>
+                <div class="form-hora">
+                    <input type="time" name="" id="">
+                </div>
+            </div>
+            <div class="form-config form-display-config">
+                <div class="form-nome">Uma única vez: </div>
+                <input type="radio" name="only-once" id="form-radio-yes"> <label for="form-radio-yes">Sim</label>
+                <input type="radio" name="only-once" id="form-radio-no"> <label for="form-radio-no">Não</label>
+            </div>
+            <div class="form-config" id="form-days" hidden>
+                <div class="form-nome">Ligar cafeteira:
+                    <input type="range" id="slider" value="0" min="0" max="2">
+                </div>
+                <div id="form-description">
+                    A) Fins de Semana
+                </div>
+            </div>
+            <div id="modal-delete-schedule" class="btn">Confirmar</div>
+            
+            <!-- <select name="" id="sel-diasSemana" class="form-hora">
+                <option value="">Nos dias úteis</option>
+                <option value="">Nos fins de semana</option>
+                <option value="">Em todos os dias da semana</option>
+            </select> -->
+        </div>
     </div>
+
+    
     <input type="checkbox" id="menu">
     <label for="menu">
         <div class="menu">
@@ -100,31 +142,10 @@
         </div>
     </div>
 
-    <div id="modal-apagar" class="modal-container">
-        <div id="agenda-criar" class="modal">
-            <div class="titulo">
-                <h2>Criar Novo Horário</h2>
-                <p>Configure o seu novo agendamento abaixo!</p>
-            </div>
-            <div id="form">
-                <div class="form-nome">Hora: </div>
-                <div class="form-hora"><input type="time" name="" id=""></div>
-                <div class="form-nome">Ligar cafeteira: </div>
-                <select name="" id="sel-diasSemana" class="form-hora">
-                    <option value="">Nos dias úteis</option>
-                    <option value="">Nos fins de semana</option>
-                    <option value="">Todos os dias da semana</option>
-                </select>
-            </div>
-        </div>
-    </div>
+    
 
     <div id="telaloader">
         <span class="loader"></span>
     </div>
-    <script src="scripts/menu.js"></script>
-    <script src="scripts/footerBar.js"></script>
-    <script src="scripts/timer.js"></script>
-    <script src="scripts/weather.js"></script>
 </body>
 </html>

@@ -113,7 +113,7 @@ div.imgsocial{
 }
 
 div.imgsocial:hover{
-    border-color: #e7d8c9;
+    border: 1px solid #e7d8c9;
 }
 
 div#s0{
@@ -149,6 +149,17 @@ div#s4{
 }
 div#s4:hover{
     background: url("../icons/social/hover/LinkedIn.png");
+}
+
+div#agendar-cancel{
+    background: url("../icons/outros/cancel.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+div#agendar-cancel:hover{
+    background: url("../icons/outros/hover/cancel.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 /*********************************************************************************************/
