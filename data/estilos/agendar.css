@@ -77,8 +77,8 @@ div.agendar-cancel{
 }
 
 #erase-cancel {
-    bottom: 330px;
-    left: 235px;
+    bottom: 365px;
+    left: 238px;
 }
 
 div#form p {
@@ -87,9 +87,9 @@ div#form p {
 
 span#warning {
     display: inline-block;
-    background-color: #b30042;
-    padding: 2px 10px;
-    border-radius: 5px;
+    font-size: 22pt;
+    border-bottom: 3px dashed #b30042;
+    padding: 0 5px;
 }
 
 div#modal-delete-schedule{
@@ -169,7 +169,7 @@ div.form-display-config{
 input[type="time"] {
     background-color: #E7D8C9;
     color: #472F3F;
-    width: 90px;
+    width: 120px;
     text-align: center;
     font: normal 15pt 'Lobster Two';
     border: 2px solid #472F3F;
@@ -177,7 +177,7 @@ input[type="time"] {
 }
 
 div#form-description {
-    background-color: #a53860dc;
+    background-color: #b30042;
     color: #E7D8C9;
     padding: 10px 20px;
     border-radius: 10px;
@@ -203,7 +203,8 @@ input[type="range"] {
 
 #modal.hide,
 #fade.hide,
-#modal-erase.hide {
+#modal-erase.hide,
+#fade2.hide {
     opacity: 0;
     pointer-events: none;
 }
@@ -233,4 +234,14 @@ input[type="range"] {
     text-align: center;
 
     margin-top: -35px;
+}
+
+#warning-title {
+    text-align: center;
+    background-color: #b30042;
+    width: fit-content;
+    margin: auto;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font: bold 25pt "Amatic SC";
 }

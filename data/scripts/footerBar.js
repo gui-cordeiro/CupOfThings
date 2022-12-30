@@ -2,10 +2,12 @@ if(window.location.pathname.split("/")[window.location.pathname.split("/").lengt
     document.querySelector("input#switch").addEventListener("click", infoTempoCafe)
 }
 
-let estado = 2 // 0) Desligado | 1) Ligado | 2) Café pronto
+let estado = 0 // 0) Desligado | 1) Ligado | 2) Café pronto
 let controle = 0 // 0) Pode mudar | 1) Não pode mudar
 
-let min = 5, seg = 0
+let contagem;
+
+let min = 0, seg = 8, finalMin = 0, finalSeg = 4
 let tempoTotal = seg + (min * 60)
 
 let tmp_div = document.querySelector("div#tempo_popup")
@@ -29,6 +31,7 @@ if(estado == 2){
     tmp_div.style.backgroundColor = "#55d06ad2"
     tmp_div.style.color = "#2c2c2c"
     tmp_div.innerHTML = `<p>${msgPronto}</p>`
+
 }
 
 /*******************************************************************************/
@@ -155,11 +158,11 @@ function timer(){
     let minTimer = min, segTimer = seg
     let msg = ""
     contagem = setInterval(() => {
-        if(minTimer == 0 && segTimer == 0){
+        if(minTimer == 0 && segTimer == 0) {
             telaPronto()
             clearInterval(contagem)
-        }else{
-            if(segTimer == 00){
+        } else {
+            if(segTimer == 00) {
                 minTimer --
                 segTimer = 60
             }
@@ -180,4 +183,20 @@ function timer(){
 function telaPronto(){
     estado = 2
     mudarEstado(2 ,5 ,2, "#55d06ad2", "#2c2c2c", msgPronto)
+
+    let minTimer = finalMin, segTimer = finalSeg
+
+    let finalInterval = setInterval(() => {
+        if(minTimer == 0 && segTimer == 0) {
+            estado = 0
+            mudarEstado(2, 5, 2, "#35353594", "#e7d8c9", msgInicial)
+            clearInterval(finalInterval)
+        } else {
+            if(segTimer == 00) {
+                minTimer --
+                segTimer = 60
+            }
+            segTimer --
+        }
+    }, 1000)
 }

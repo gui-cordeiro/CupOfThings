@@ -114,41 +114,62 @@ div.imgsocial{
 
 div.imgsocial:hover{
     border: 1px solid #e7d8c9;
+    
 }
 
 div#s0{
     background: url("../icons/social/Twitter.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 div#s0:hover{
     background: url("../icons/social/hover/Twitter.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 div#s1{
     background: url("../icons/social/Instagram.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 div#s1:hover{
     background: url("../icons/social/hover/Instagram.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 div#s2{
     background: url("../icons/social/Facebook.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 div#s2:hover{
     background: url("../icons/social/hover/Facebook.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 div#s3{
     background: url("../icons/social/GitHub.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 div#s3:hover{
     background: url("../icons/social/hover/GitHub.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 div#s4{
     background: url("../icons/social/LinkedIn.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 div#s4:hover{
     background: url("../icons/social/hover/LinkedIn.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 div.agendar-cancel{
