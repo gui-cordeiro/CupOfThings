@@ -7,30 +7,17 @@ const closeEraseModalButton = document.querySelector("div#erase-cancel");
 const eraseModal = document.querySelector("div#modal-erase");
 
 const fade = document.querySelector("div#fade");
-const fade2 = document.querySelector("div#fade2");
-
-// const toggleModal = () => {
-//     [modal, eraseModal, fade, fade2].forEach((el) => el.classList.toggle("hide"));
-// }
-
-// [openModalButton,openEraseModalButton, closeModalButton, closeEraseModalButton, fade, fade2].forEach((el) => {
-//     el.addEventListener("click", () => toggleModal());
-// });
 
 [openModalButton, closeModalButton].forEach((element) => {
     element.addEventListener("click", () => {
-        modal.classList.toggle("hide")
-        fade.classList.toggle("hide")
+        [modal, fade].forEach((el) => el.classList.toggle("hide"))
     });
 });
 
-openEraseModalButton.addEventListener("click", () => {
-    eraseModal.classList.toggle("hide")
-    fade.classList.toggle("hide")
-});
-closeEraseModalButton.addEventListener("click", () => {
-    eraseModal.classList.toggle("hide")
-    fade.classList.toggle("hide")
+[openEraseModalButton, closeEraseModalButton].forEach((element) => {
+    element.addEventListener("click", () => {
+        [eraseModal, fade].forEach((el) => el.classList.toggle("hide"))
+    });
 });
 
 
