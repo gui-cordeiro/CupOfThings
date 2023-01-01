@@ -1,14 +1,19 @@
-if(window.location.pathname.split("/")[window.location.pathname.split("/").length - 1] == "index.html"){
+let actualHTMLFile = window.location.pathname.split("/")[window.location.pathname.split("/").length - 1]
+
+if(actualHTMLFile == "index.html"){
     document.querySelector("input#switch").addEventListener("click", infoTempoCafe)
 }
 
-let estado = 0 // 0) Desligado | 1) Ligado | 2) Café pronto
-let controle = 0 // 0) Pode mudar | 1) Não pode mudar
+let estado = 2 // 0) Desligado | 1) Ligado | 2) Café pronto
+let controle = 0 // 0) Botão switch desbloqueado | 1) Botão switch bloqueado
 
 let contagem;
+let flagShutdown;
 
-let min = 0, seg = 8, finalMin = 0, finalSeg = 4
+let min = 0, seg = 8
 let tempoTotal = seg + (min * 60)
+
+const hourShutdown = 13, minShutdown = 3
 
 let tmp_div = document.querySelector("div#tempo_popup")
 
@@ -16,11 +21,15 @@ let msgInicial = tmp_div.innerHTML
 
 let msgOn = "<div id=\"conteudo\"><p>Preparando seu café! Tempo restante: <span class=\"tempoRest\">01:30</span></p><div id=\"cobrir\"><div class=\"circular\"><div class=\"inner\"></div><div class=\"numb\">01:30</div><div class=\"circle\"><div class=\"bar left\"><div class=\"progress\"></div></div><div class=\"bar right\"><div id=\"delay\" class=\"progress\"></div></div></div></div></div><p id=\"msg\">Enquanto isso, aproveite para escutar uma musiquinha!</p><div id=\"spotify\"><iframe src=\"https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn\" width=\"320\" height=\"320\" frameborder=\"0\" allowtransparency=\"true\" allow=\"encrypted-media\"></iframe></div></div>"
 
-let msgPronto = "<p>Seu café está pronto! ☕</p><div id=\"imgPronto\"><img src=\"imagens/9-01.jpg\" alt=\"\"></div><div id=\"lembrete\">Lembre-se de tomar um café da manhã reforçado. Aproveite seu café e tenha um bom dia!</div><div id=\"autoOff\">Sua cafeteira desligará automaticamente às: <div id=\"autoOffHora\">07:30</div></div>"
+let msgPronto = "<p>Seu café está pronto! ☕</p><div id=\"imgPronto\"><img src=\"imagens/9-01.jpg\" alt=\"\"></div><div id=\"lembrete\">Lembre-se de tomar um café da manhã reforçado. Aproveite seu café e tenha um bom dia!</div><div id=\"autoOff\">Sua cafeteira desligará automaticamente às: <div id=\"autoOffHora\">" + hourShutdown + ":" + minShutdown + "</div></div>"
 
 /*******************************************************************************/
+if(estado == 0){
+    document.querySelector("input#switch").checked = false
+}
 
 if(estado == 1){
+    document.querySelector("input#switch").checked = true
     tmp_div.style.backgroundColor = "#a53860d2"
     tmp_div.style.color = "#e7d8c9"
     tmp_div.innerHTML = `<p>${msgOn}</p>`
@@ -28,10 +37,11 @@ if(estado == 1){
 }
 
 if(estado == 2){
+    document.querySelector("input#switch").checked = true
     tmp_div.style.backgroundColor = "#55d06ad2"
     tmp_div.style.color = "#2c2c2c"
     tmp_div.innerHTML = `<p>${msgPronto}</p>`
-
+    telaPronto()
 }
 
 /*******************************************************************************/
@@ -46,6 +56,7 @@ function infoTempoCafe(){
         }else{
             estado = 0
             clearInterval(contagem)
+            clearInterval(flagShutdown)
             mudarEstado(2, 5, 2, "#35353594", "#e7d8c9", msgInicial)
         }
     }else{
@@ -159,6 +170,8 @@ function timer(){
     let msg = ""
     contagem = setInterval(() => {
         if(minTimer == 0 && segTimer == 0) {
+            estado = 2
+            mudarEstado(2 ,5 ,2, "#55d06ad2", "#2c2c2c", msgPronto)
             telaPronto()
             clearInterval(contagem)
         } else {
@@ -181,22 +194,17 @@ function timer(){
 }
 
 function telaPronto(){
-    estado = 2
-    mudarEstado(2 ,5 ,2, "#55d06ad2", "#2c2c2c", msgPronto)
-
-    let minTimer = finalMin, segTimer = finalSeg
-
-    let finalInterval = setInterval(() => {
-        if(minTimer == 0 && segTimer == 0) {
+    let date 
+    flagShutdown = setInterval(() => {
+        date = new Date()
+        if (date.getHours() == hourShutdown && date.getMinutes() == minShutdown) {
+            if(actualHTMLFile == "index.html"){
+                document.querySelector("input#switch").checked = false
+            }
             estado = 0
             mudarEstado(2, 5, 2, "#35353594", "#e7d8c9", msgInicial)
-            clearInterval(finalInterval)
-        } else {
-            if(segTimer == 00) {
-                minTimer --
-                segTimer = 60
-            }
-            segTimer --
+            clearInterval(flagShutdown)
         }
-    }, 1000)
+    }, 5000)
+    
 }
