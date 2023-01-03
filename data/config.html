@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Home - Cafeteira</title>
+    <link rel="stylesheet" href="estilos/layout.css">
+    <link rel="stylesheet" href="estilos/agendar.css">
+    <link rel="stylesheet" href="estilos/menu.css">
+    <link rel="stylesheet" href="estilos/footerBar.css">
+    <link rel="stylesheet" href="estilos/timer.css">
+    <script src="scripts/menu.js" defer></script>
+    <script src="scripts/footerBar.js" defer></script>
+    <script src="scripts/timer.js" defer></script>
+    <script src="scripts/weather.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Cafeteira Inteligente</h1>
+        <p>Seu amado café feito de forma descomplicada!</p>
+    </header>
+    <main>
+        <div class="titulo">
+            <h2>Configurações Gerais</h2>
+            <p>Faça os ajustes necessários para ter a melhor experiência!</p>
+        </div>
+        <div id="video">
+            
+        </div>
+        <div id="form">
+            <div class="form-config form-display-config">
+                <div class="form-nome">Hora: </div>
+                <div class="form-hora">
+                    <input type="time" name="" id="">
+                </div>
+            </div>
+            <div class="form-config form-display-config">
+                <div class="form-nome">Uma única vez: </div>
+                <input type="radio" name="only-once" id="form-radio-yes"> <label for="form-radio-yes">Sim</label>
+                <input type="radio" name="only-once" id="form-radio-no"> <label for="form-radio-no">Não</label>
+            </div>
+            <div class="form-config" id="form-days" hidden>
+                <div class="form-nome">Ligar cafeteira:
+                    <input type="range" id="slider" value="0" min="0" max="2">
+                </div>
+                <div id="form-description">
+                    A) Fins de Semana
+                </div>
+            </div>
+            <div id="modal-delete-schedule" class="btn">Confirmar</div>
+        </div>
+    </main>
+    <input type="checkbox" id="menu">
+    <label for="menu">
+        <div class="menu">
+            <span class="hamburguer"></span>
+        </div>
+        <div id="tampar"> </div>
+        <ul>
+            <!-- Fazer a parada de ontem: Foto com Clima -->
+            <div id="container-menu">
+                <div id="cont-menuimg">
+                    <img src="imagens/perfil/Gui.png" alt="">
+                </div>
+                <div id="cont-menudivisao"></div>
+                <div id="cont-menuweather">
+                    <div id="cont-menuweatherimg"><img src="icons/clima/unknown.png" alt="Ícone do Clima"></div>
+                    <div id="cont-menuweathertemp">
+                        <div id="cont-menuweathertemp_atual">??ºC</div>
+                        ??ºC/??ºC
+                    </div>
+                    <div id="cont-menuweatherdesc">Descrição do Clima</div>
+                </div>
+            </div>
+            <li><a href="index.html">Ligar/Desligar Cafeteira</a></li>
+            <li><a href="agendar.html">Agendar Horário</a></li>
+            <li><a href="config.html">Configurações</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </label>
+    <footer>
+
+    </footer>
+    <div id="tempo_popup">
+        <p id="msg">Com 🤍 por Guilherme Cordeiro</p>
+        <div id="info">
+            <div id="infohead">
+                <img src="imagens/perfil/Gui.png" alt="">
+                <div id="divisao"></div>
+                <div id="desc">
+                    <p>Sou eu! :D</p>
+                </div>
+                </div>
+            </div>
+            <div id="social">
+                <p>Siga as minhas redes sociais!</p>
+                <div class="iconsocial-linha">
+                    <a href="https://twitter.com/Gui_CdR" target="__blank" rel="external">
+                        <div id="s0" class="imgsocial"></div>
+                    </a>
+                    <a href="https://www.instagram.com/gui.scordeiro/" target="_blank" rel="external">
+                        <div id="s1" class="imgsocial"></div>
+                    </a>
+                    <a href="https://www.facebook.com/guilherme.cordeiro.56232" target="__blank" rel="external">
+                        <div id="s2" class="imgsocial"></div>
+                    </a>
+                </div>
+                <div class="iconsocial-linha">
+                    <a href="https://github.com/gui-cordeiro" target="__blank" rel="external">
+                        <div id="s3" class="imgsocial"></div>
+                    </a>
+                    <a href="https://linkedin.com/in/gui-cordeiro" target="__blank" rel="external">
+                        <div id="s4" class="imgsocial"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="telaloader">
+        <span class="loader"></span>
+    </div>
+</body>
+</html>
