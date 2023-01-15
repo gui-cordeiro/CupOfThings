@@ -4,16 +4,16 @@ if(actualHTMLFile == "index.html"){
     document.querySelector("input#switch").addEventListener("click", infoTempoCafe)
 }
 
-let estado = 2 // 0) Desligado | 1) Ligado | 2) Café pronto
-let controle = 0 // 0) Botão switch desbloqueado | 1) Botão switch bloqueado
+let actualCoffeeMachineState = 2 // 0) Desligado | 1) Ligado | 2) Café pronto
+let switchBtnIsLocked = false // 0) Botão switch desbloqueado | 1) Botão switch bloqueado
 
 let contagem;
 let flagShutdown;
 
-let minutesFullTime = 2, secondsFullTime = 0
+let minutesFullTime = 0, secondsFullTime = 15
 let totalFullTime = secondsFullTime + (minutesFullTime * 60)
 
-let minutesLeftTime = 0, secondsLeftTime = 5
+let minutesLeftTime = 0, secondsLeftTime = 15
 let totalLeftTime = secondsLeftTime + (minutesLeftTime * 60)
 
 const hourShutdown = 22, minShutdown = 8
@@ -29,90 +29,65 @@ msgPronto += hourShutdown < 10 ? "0" + hourShutdown + ":" : hourShutdown + ":"
 msgPronto += minShutdown < 10 ? "0" + minShutdown + "</div></div>" : minShutdown + "</div></div>"
 
 /*******************************************************************************/
-if(estado == 1){
+if(actualCoffeeMachineState == 1){
     if (actualHTMLFile == "index.html") document.querySelector("input#switch").checked = true
     tmp_div.style.backgroundColor = "#a53860d2"
     tmp_div.style.color = "#e7d8c9"
-    tmp_div.innerHTML = `<p>${msgOn}</p>`
+    document.getElementById("conteudo").style.visibility = ""
     setFooterBarTimer()
-} else if(estado == 2){
+} else if(actualCoffeeMachineState == 2){
     if (actualHTMLFile == "index.html") document.querySelector("input#switch").checked = true
     tmp_div.style.backgroundColor = "#55d06ad2"
     tmp_div.style.color = "#2c2c2c"
-    tmp_div.innerHTML = `<p>${msgPronto}</p>`
+    tmp_div.innerHTML = `${msgPronto}`
     telaPronto()
 } else {
-    estado = 0
+    actualCoffeeMachineState = 0
     document.querySelector("input#switch").checked = false
 }
 
 
 /*******************************************************************************/
 
-//Função que verificará o estado do Switch, para que seja realizada alguma ação com a barra inferior
+//Função que verificará o actualCoffeeMachineState do Switch, para que seja realizada alguma ação com a barra inferior
 function infoTempoCafe(){
-    if(controle == 0){
+    if(switchBtnIsLocked == true) {
+        document.querySelector("input#switch").checked = !document.querySelector("input#switch").checked
+    } else {
         if(document.querySelector("input#switch").checked){
-            estado = 1
-            startFooterBarChange(2, 1, 2, "#a53860d2", "#e7d8c9", msgOn)
+            actualCoffeeMachineState = 1
+            changeFooterBarState("#a53860d2", "#e7d8c9", msgOn)
             setFooterBarTimer()
         }else{
-            estado = 0
+            actualCoffeeMachineState = 0
             clearInterval(contagem)
             clearInterval(flagShutdown)
-            startFooterBarChange(2, 1, 2, "#35353594", "#e7d8c9", msgInicial)
+            changeFooterBarState("#35353594", "#e7d8c9", msgInicial)
         }
-    }else{
-        document.querySelector("input#switch").checked = !document.querySelector("input#switch").checked
     }
 }
 
 /*******************************************************************************/
 
-// Função que irá diminuir a altura da barra inferior ao clicar no botão Switch
-function startFooterBarChange(tmp1, pausa, tmp2, corFundo, cor, msg){
-    controle = 1 //Cafeteira ligada
-    let alt = 35
-    descer = setInterval(() => {
-        if(tmp_div.style.height != `0px`){
-            tmp_div.style.height = `${alt}px`
-            alt --
-        }else{
-            changeFooterBarContent(pausa, tmp2, corFundo, cor, msg)
-            clearInterval(descer)
+// Changing the footer bar content
+function changeFooterBarState(footerBarBGColor, footerBarColor, footerBarContent){
+    switchBtnIsLocked = true
+    for (let footerBarHeight = 35; footerBarHeight > - 10; footerBarHeight --) {
+        tmp_div.style.height = `${footerBarHeight}px`
+    }
+    let changeContent = setTimeout(() => {
+        tmp_div.style.backgroundColor = footerBarBGColor
+        tmp_div.style.color = footerBarColor
+        tmp_div.innerHTML = `<p>${footerBarContent}</p>`
+    }, 400)
+    let subir = setTimeout(() => {
+        for (let footerBarHeight = -10; footerBarHeight < 35; footerBarHeight ++) {
+            tmp_div.style.height = `${footerBarHeight}px`
         }
-    }, tmp1)
+        switchBtnIsLocked = false
+    }, 600)
 }
 
-// Função que irá alterar o conteúdo e a cor da barra inferior (Continuação da função 'startFooterBarChange()')
-function changeFooterBarContent(pausa, tmp2, corFundo, cor, msg){
-    cont = 100
-    trocar = setInterval(() => {
-        if(cont == 0){
-            tmp_div.style.backgroundColor = corFundo
-            tmp_div.style.color = cor
-            tmp_div.innerHTML = `<p>${msg}</p>`
-            finishFooterBarChange(tmp2)
-            clearInterval(trocar)
-        }else{
-            cont --
-        }
-    }, pausa)
-}
-
-//Função que irá aumentar a altura da barra inferior (Continuação da função 'changeFooterBarContent()')
-function finishFooterBarChange(tmp2){
-    let alt = -10
-    subir = setInterval(() => {
-        if(tmp_div.style.height == `35px`){
-            controle = 0
-            clearInterval(subir)
-        }else{
-            tmp_div.style.height = `${alt}px`
-            alt ++
-        }
-    }, tmp2)
-}
 
 /*******************************************************************************/
 
@@ -122,11 +97,11 @@ tmp_div.addEventListener("mouseenter", mouseEnter)
 function mouseEnter(){
     if(!document.querySelector("input#menu").checked){
         document.body.style.overflow = "hidden"
-        if(estado == 0){
+        if(actualCoffeeMachineState == 0){
             tmp_div.style.height = "450px"
             document.querySelector("div#info").style.opacity = "1"
             document.querySelector("div#social").style.opacity = "1"
-        }else if(estado == 1){
+        }else if(actualCoffeeMachineState == 1){
             tmp_div.style.height = "450px"
             document.querySelector("div#cobrir").style.opacity = "1"
             document.querySelector("p#msg").style.opacity = "1"
@@ -139,7 +114,7 @@ function mouseEnter(){
             // circle[0].style.animationDuration = `${totalLeftTime / 2}s`
             // circle[1].style.animationDuration = `${totalLeftTime / 2}s`
             // document.getElementById("delay").style.animationDelay = `${totalLeftTime / 2}s`
-        }else if(estado == 2){
+        }else if(actualCoffeeMachineState == 2){
             tmp_div.style.height = "450px"
             document.querySelector("div#imgPronto").style.opacity = "1"
             document.querySelector("div#lembrete").style.opacity = "1"
@@ -156,13 +131,13 @@ function mouseLeave(){
         //alert(tmp_div.getBoundingClientRect().height)
         document.body.style.overflow = "visible"  
         tmp_div.style.height = "35px"
-        if(estado == 0){
+        if(actualCoffeeMachineState == 0){
             document.querySelector("div#info").style.opacity = "0"
             document.querySelector("div#social").style.opacity = "0"
-        }else if(estado == 1){
+        }else if(actualCoffeeMachineState == 1){
             document.querySelector("div#cobrir").style.opacity = "0"
             document.querySelector("p#msg").style.opacity = "0"
-        }else if(estado == 2){
+        }else if(actualCoffeeMachineState == 2){
             document.querySelector("div#imgPronto").style.opacity = "0"
             document.querySelector("div#lembrete").style.opacity = "0"
             document.querySelector("div#autoOff").style.opacity = "0"
@@ -177,8 +152,8 @@ function setFooterBarTimer(){
     let msg = ""
     contagem = setInterval(() => {
         if(minTimer == 0 && segTimer == 0) {
-            estado = 2
-            startFooterBarChange(2 ,5 ,2, "#55d06ad2", "#2c2c2c", msgPronto)
+            actualCoffeeMachineState = 2
+            changeFooterBarState("#55d06ad2", "#2c2c2c", msgPronto)
             telaPronto()
             clearInterval(contagem)
         } else {
@@ -208,8 +183,8 @@ function telaPronto(){
             if(actualHTMLFile == "index.html"){
                 document.querySelector("input#switch").checked = false
             }
-            estado = 0
-            startFooterBarChange(2, 5, 2, "#35353594", "#e7d8c9", msgInicial)
+            actualCoffeeMachineState = 0
+            changeFooterBarState("#35353594", "#e7d8c9", msgInicial)
             clearInterval(flagShutdown)
         }
     }, 5000)

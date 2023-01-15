@@ -150,6 +150,29 @@ div#container-menu{
     margin: auto;
 }
 
+#current-city {
+    width: fit-content;
+    height: 50px;
+    margin: auto 20px -5px auto;
+}
+
+#current-city-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+img#location-icon {
+    width: 110%;
+    margin-bottom: -3px;
+    padding: 0;
+}
+
+#current-city-name {
+    display: inline-block;
+    font: bold 14pt "Amatic SC";
+}
+
 div#cont-menuimg{
     display: block;
     float: left;
@@ -171,16 +194,17 @@ div#cont-menuimg img{
 div#cont-menudivisao{
     display: inline-block;
     margin: 0 10px;
+    margin-top: -50px;
     width: 3px;
-    height: 120px;
+    height: 170px;
     border: 1px solid #453646;
     background-color: #453646;
 }
 
 div#cont-menuweather{
     float: right;
-    border: 0px solid blue;
     height: 120px;
+    border-top: 2px dashed #453646;
 }
 
 div#cont-menuweatherimg{
@@ -188,7 +212,6 @@ div#cont-menuweatherimg{
     float: left;
     width: fit-content;
     height: 77px;
-    border: 0px solid green;
 }
 
 div#cont-menuweatherimg img{
@@ -204,7 +227,6 @@ div#cont-menuweathertemp{
 
 div#cont-menuweathertemp_atual{
     float: right;
-    border: 0px solid rgb(205, 50, 171);
     font: bold 30pt "Amatic SC";
 }
 
