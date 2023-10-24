@@ -4,7 +4,7 @@ if(actualHTMLFile == "index.html"){
     document.querySelector("input#switch").addEventListener("click", infoTempoCafe)
 }
 
-let actualCoffeeMachineState = 2 // 0) Desligado | 1) Ligado | 2) Café pronto
+let actualCoffeeMachineState = 0 // 0) Desligado | 1) Ligado | 2) Café pronto
 let switchBtnIsLocked = false // 0) Botão switch desbloqueado | 1) Botão switch bloqueado
 
 let contagem;
