@@ -5,7 +5,7 @@
 **ProjetoCafe-IoT** é um projeto que visa facilitar o dia a dia das pessoas, automatizando e simplificando o preparo do tão amado **cafézinho preto**.
 
 ## ⁉️ Como o projeto funciona?
-O **ProjetoCafe-IoT** consiste numa tomada inteligente controlada por um microcontrolador **ESP-8266**. Esta, por sua vez, controla um relé que é o responsável pela **continuidade** ou **interrupção** da corrente elétrica da tomada.
+O **ProjetoCafe-IoT** consiste numa tomada inteligente controlada por um microcontrolador **ESP-8266**. Este, por sua vez, controla um relé que é o responsável pela **continuidade** ou **interrupção** da corrente elétrica da tomada.
 
 Para controlar tal relé, o **ESP-8266** também é configurado para trabalhar como um ***Web Server***, hospedando um site projetado especialmente para **dispositivos móveis** e que fará a comunicação entre as **ações do usuário** e o **microcontrolador**.
 
@@ -23,7 +23,7 @@ Neste site, é possível acionar remotamente a cafeteira de **maneira imediata**
 <a href="https://platformio.org/"><img alt="Ícone do PlatformIO" width="60em" src="https://github.com/gui-cordeiro/ProjetoCafe-IoT/assets/83349463/0bc1ed91-5989-49aa-8849-cb53f44925a5"/></a>
 
 ## 🖼️ Galeria do projeto
-Veja abaixo algumas das fotos do projeto. As imagens do *Web Server* foram capturadas no Google Chrome, com a configuração de prévia de visualização baseada no **Google Pixel 5**:
+Veja abaixo algumas das fotos do projeto. As imagens do *Web Server* foram capturadas no Google Chrome, com a configuração de prévia de visualização baseada na tela do smartphone **Google Pixel 5**:
 
 ### 1) Página principal do *Web Server*
 ![Design_sem_nome-removebg](https://github.com/gui-cordeiro/ProjetoCafe-IoT/assets/83349463/4d592135-f26d-4cb9-9182-abfc798289a0)
