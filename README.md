@@ -1,11 +1,11 @@
-# ☕ ProjetoCafe-IoT 📱
+# ☕ CoT - Cup of Things 📱
  Automatize sua cafeteira e tome um bom café sem preocupações!
 
 ## 📕 Sobre o projeto
-**ProjetoCafe-IoT** é um projeto que visa facilitar o dia a dia das pessoas, automatizando e simplificando o preparo do tão amado **cafézinho preto**.
+**"Cup of Things"** é um projeto que visa facilitar o dia a dia das pessoas, automatizando e simplificando o preparo do tão amado **cafézinho preto**.
 
 ## ⁉️ Como o projeto funciona?
-O **ProjetoCafe-IoT** consiste numa tomada inteligente controlada por um microcontrolador **ESP-8266**. Este, por sua vez, controla um relé que é o responsável pela **continuidade** ou **interrupção** da corrente elétrica da tomada.
+O **"Cup of Things"** consiste numa tomada inteligente controlada por um microcontrolador **ESP-8266**. Este, por sua vez, controla um relé que é o responsável pela **continuidade** ou **interrupção** da corrente elétrica da tomada.
 
 Para controlar tal relé, o **ESP-8266** também é configurado para trabalhar como um ***Web Server***, hospedando um site projetado especialmente para **dispositivos móveis** e que fará a comunicação entre as **ações do usuário** e o **microcontrolador**.
 
@@ -38,11 +38,11 @@ Veja abaixo algumas das fotos do projeto. As imagens do *Web Server* foram captu
 ## 🤝 Como contribuir?
 ````bash
 # 1) Clone o repositório do projeto:
-$ git clone https://github.com/gui-cordeiro/ProjetoCafe-IoT.git
+$ git clone https://github.com/gui-cordeiro/CupOfThings.git
 ````
 
 ````bash
-# 2) Entre na pasta do repositório:
+# 2) Entre na pasta do repositório (o nome desta pasta será futuramente atualizado pelo nome atual do projeto):
 $ cd ProjetoCafe-IoT
 ````
 
