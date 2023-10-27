@@ -36,7 +36,7 @@
 }
 
 body{
-    background-image: linear-gradient(to right, rgb(216, 199, 231), #cdc4f3, #96c5f7ee);
+    background-image: linear-gradient(to right, #d8c7e7, #cdc4f3, #96c5f7ee);
     background-size: 400% 400%;
     animation: body 10s ease-in-out infinite;
     margin: 0;
