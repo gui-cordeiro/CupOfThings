@@ -10,10 +10,10 @@ let switchBtnIsLocked = false // 0) Botão switch desbloqueado | 1) Botão switc
 let contagem;
 let flagShutdown;
 
-let minutesFullTime = 0, secondsFullTime = 15
+let minutesFullTime = 0, secondsFullTime = 3
 let totalFullTime = secondsFullTime + (minutesFullTime * 60)
 
-let minutesLeftTime = 0, secondsLeftTime = 15
+let minutesLeftTime = 0, secondsLeftTime = 0
 let totalLeftTime = secondsLeftTime + (minutesLeftTime * 60)
 
 const hourShutdown = 22, minShutdown = 8
