@@ -8,15 +8,16 @@ const api = {
 const container_img = document.querySelector("div#cont-menuweatherimg");
 const temperaturas = document.querySelector("div#cont-menuweathertemp");
 const weather_t = document.querySelector("div#cont-menuweatherdesc");
+const current_city_div = document.querySelector("div#current-city-name")
 const current_city = "Rio de Janeiro"
 
 window.onload = function searchResults() {
-    document.querySelector("div#current-city-name").innerHTML = current_city
     fetch(`${api.base}weather?q=${current_city}&lang=${api.lang}&units=${api.units}&APPID=${api.key}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`http error: status ${response.status}`)
             }
+            current_city_div.innerHTML = current_city
             return response.json();
         })
         .catch(error => {
