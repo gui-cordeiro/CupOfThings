@@ -4,8 +4,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
 
 .menu{
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
     background-color: #E7D8C9;
     border-radius: 50%;
     border: 2px solid #453646;
@@ -38,10 +38,10 @@
     position: relative;
     display: block;
     background-color: #453646;
-    width: 30px;
+    width: 38px;
     height: 2px;
-    top: 28px;
-    left: 13px;
+    top: 30px;
+    left: 12px;
     transition: all .8s ease;
 }
 
@@ -71,7 +71,7 @@ input#menu{
 input#menu:checked ~ label ul{
     visibility: visible;
     opacity: 1;
-    transition: 3s .15s cubic-bezier(0, 1.07, 0 , 1.02);
+    transition: .5s .15s cubic-bezier(0, 1.07, 0 , 1.02);
 }
 
 input#menu:checked ~ label #tampar{
@@ -97,20 +97,64 @@ input#menu:checked ~ label .hamburguer::after{
     bottom: 0;
 }
 
+input#menu:checked ~ label #btn-secundarios{
+    visibility: visible;
+    transition: 3s .2s cubic-bezier(0, 1.07, 0, 1.02);
+}
+
 #divisoria{
-    margin: 30px auto;
-    width: 290px;
+    margin: 25px auto;
+    width: 160px;
     border: 1px dotted #453646;
     font-size: 20px;
     text-decoration: none;
     white-space: nowrap;
 }
 
+.teste-btn{
+    display: inline-block;
+}
+
+#btn-secundarios{
+    width: fit-content;
+    position: fixed;
+    bottom: 50px;
+    right: 100px;
+    border: 0px solid red;
+    visibility: hidden;
+    transition: .1s cubic-bezier(0, 1.07, 0 , 1.02);
+}
+
+.btn-secundario{
+    width: 60px;
+    height: 60px;
+    margin: auto 5px;
+    background-color: #453646;
+    border-radius: 100%;
+    border: 2px solid #E7D8C9;
+    bottom: 0px;
+    left: 25px;
+    cursor: pointer;
+    box-shadow: 0px 0px 7px 2px #45364685;
+}
+
+.desc_btnsecundario{
+    display: inline-block;
+    position: absolute;
+    margin: 16px 0 0 25px;
+    width: fit-content;
+    font-weight: bold;
+    font-family: "Amatic SC";
+    font-size: 15pt;
+    color: #E7D8C9;
+    border: 0px solid red;
+}
+
 ul{
     position: fixed;
     display: inline-block;
     opacity: 0;
-    transition: 1s .1s cubic-bezier(0, 1.07, 0 , 1.02);
+    transition: 2s .1s cubic-bezier(0, 1.07, 0 , 1.02);
     visibility: hidden;
     top: 37%;
     left: 50%;
@@ -123,32 +167,61 @@ ul{
     border: 0px solid red;
 }
 
-ul li{
-    font-weight: bold;
-    font-family: "Amatic SC";
-    background-color: #E7D8C9;
-    border: 2px solid #453646;
-    width: 120px;
-    height: 140px;
-    margin-left: 10px;
-    border-radius: 15px;
-    transition: all .2s ease;
-    box-shadow: 0px 0px 7px #45364685;
+#btn_on_off{
+    display: inline-block;
+    width: fit-content;
+    margin-right: 15px;
 }
 
-ul li a{
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-    color: #453646;
-    font-size: 20px;
-    text-decoration: none;
-    white-space: nowrap;
+#btn_primario{
+    width: fit-content;
+    height: fit-content;
+    border: 0px solid red;
+    margin: auto;
+}
+
+.btn-primario{
+    font-weight: bold;
+    font-family: "Amatic SC";
+    background-color: #453646;
+    border: 2px solid #E7D8C9;
+    width: 120px;
+    height: 140px;
+    border-radius: 15px;
+    transition: all .2s ease;
+    box-shadow: 0px 0px 7px 2px #45364685;
+}
+
+.desc_btnprimario{
+    width: 120px;
+    margin-top: -50px;
+    position: absolute;
+    height: fit-content;
+    font-weight: bold;
+    font-family: "Amatic SC";
+    font-size: 15pt;
+    color: #E7D8C9;
+    border: 0px solid #453646;
+}
+
+#btn_agendamento{
+    display: inline-block;
+    margin-left: 15px;
 }
 
 ul li:hover{
     background-color: #453646;
     border-color: #e7d8c9;
+}
+
+ul li a{
+    width: 120px;
+    height: 140px;
+    margin: auto;
+    color: #453646;
+    font-size: 20px;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 a:hover{
@@ -168,6 +241,17 @@ div#container-menu{
     padding-bottom: 42px;
     border-bottom: 2px dashed #453646;
     text-align: center;
+    background-image: linear-gradient(
+        90deg,
+        currentColor -12%,
+        transparent 23%,
+        transparent 77%,
+        currentColor 112%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-attachment: fixed;
+    white-space: nowrap;
 }
 
 #current-city-icon {
