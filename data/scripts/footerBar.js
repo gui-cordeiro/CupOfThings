@@ -157,7 +157,7 @@ function setFooterBarTimer(){
             telaPronto()
             clearInterval(contagem)
         } else {
-            if(segTimer == 00) {
+            if(segTimer == 0) {
                 minTimer --
                 segTimer = 60
             }
