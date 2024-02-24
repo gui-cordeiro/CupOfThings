@@ -167,17 +167,24 @@ ul{
     border: 0px solid red;
 }
 
-#btn_on_off{
+#btn_on_off, #btn_config{
     display: inline-block;
     width: fit-content;
     margin-right: 15px;
 }
 
-#btn_primario{
+#btn_superior{
     width: fit-content;
     height: fit-content;
     border: 0px solid red;
     margin: auto;
+}
+
+#btn_inferior{
+    width: fit-content;
+    height: fit-content;
+    border: 0px solid red;
+    margin: 20px auto auto auto;
 }
 
 .btn-primario{
@@ -204,9 +211,9 @@ ul{
     border: 0px solid #453646;
 }
 
-#btn_agendamento{
+#btn_agendamento, #btn_reset{
     display: inline-block;
-    margin-left: 15px;
+    margin-left: 0px;
 }
 
 ul li:hover{
@@ -231,7 +238,7 @@ a:hover{
 div#container-menu{
     width: 290px;
     height: 168px;
-    margin: auto;
+    margin: 40px auto auto auto;
 }
 
 #current-city {

@@ -58,26 +58,56 @@
         </div>
         <div id="tampar"> </div>
         <ul>
-            <!-- Fazer a parada de ontem: Foto com Clima -->
             <div id="container-menu">
                 <div id="cont-menuimg">
-                    <img src="imagens/perfil/Gui.png" alt="">
+                    <img src="imagens/menu.png" alt="">
                 </div>
                 <div id="cont-menudivisao"></div>
                 <div id="cont-menuweather">
+                    <div id="current-city">
+                        <div id="current-city-icon">
+                            <img id="location-icon" src="icons/outros/location-icon.png" alt="">
+                        </div>
+                        <div id="current-city-name">Nome da Cidade</div>
+                    </div>
                     <div id="cont-menuweatherimg"><img src="icons/clima/unknown.png" alt="Ícone do Clima"></div>
                     <div id="cont-menuweathertemp">
                         <div id="cont-menuweathertemp_atual">??ºC</div>
                         ??ºC/??ºC
                     </div>
-                    <div id="cont-menuweatherdesc">Descrição do Clima</div>
+                    <div id="cont-menuweatherdesc">Descrição do clima</div>
                 </div>
             </div>
-            <li><a href="index.html">Ligar/Desligar Cafeteira</a></li>
-            <li><a href="agendar.html">Agendar Horário</a></li>
-            <li><a href="config.html">Configurações</a></li>
-            <li><a href="#">Contato</a></li>
-        </ul>
+            <div id="divisoria"></div>
+            <div id="btn_superior">
+                <div id="btn_on_off">
+                    <a href="index.html"><div id="div_on_off" class="btn-primario">
+                        <img src="icons/outros/light.png" alt="" style=" height: 50%; margin-top: 20px;">
+                    </div></a>
+                    <div id="desc_on_off" class="desc_btnprimario">Ligar/Desligar</div>
+                </div>
+                <div id="btn_agendamento">
+                    <a href="agendar.html"><div id="div_agendamento" class="btn-primario">
+                        <img src="icons/outros/alarme-clock.png" alt="" style="height: 50%; margin-top: 20px;">
+                    </div></a>
+                    <div id="desc_agendamento" class="desc_btnprimario">Agendar Hora</div>
+                </div>
+            </div>
+            <div id="btn_inferior">
+                <div id="btn_config">
+                    <a href="config.html"><div id="div_config" class="btn-primario">
+                        <img src="icons/outros/settings.png" alt="" style="height: 55%; margin-top: 20px;">
+                    </div></a>
+                    <div id="desc_agendamento" class="desc_btnprimario">Configurações</div>
+                </div>
+                <div id="btn_reset">
+                    <a href="#"><div id="div_restart" class="btn-primario">
+                        <img src="icons/outros/restart.png" alt="" style="height: 55%; scale: 85%; margin-top: 20px;">
+                    </div></a>
+                    <div id="desc_agendamento" class="desc_btnprimario">Reiniciar Sistema</div>
+                </div>
+            </div>
+            </ul>
     </label>
     <footer>
 

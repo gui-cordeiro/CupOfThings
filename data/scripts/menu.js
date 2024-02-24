@@ -2,6 +2,8 @@
 
 document.querySelector("input#menu").addEventListener("click", scroll)
 
+document.querySelector("div#btn_reset").addEventListener("click", resetWebServer)
+
 /*******************************************************************************/
 
 window.addEventListener("load", function fadeOut(){
@@ -28,4 +30,10 @@ function scroll(){
     }else{
         document.body.style.overflow = "visible"     
     }
+}
+
+function resetWebServer() {
+    alert("Caso esteja presenciando instabilidades neste site, você pode reiniciar o sistema da tomada inteligente da cafeteira para tentar resolver estes problemas.\n\nSe os problemas persistirem, entre em contato com o desenvolvedor.")
+    let opt = confirm("Você está prestes a reiniciar o sistema da tomada inteligente da cafeteira.\n\nDeseja MESMO prosseguir?");
+    if (opt) alert("O sistema será reiniciado em instantes. Aguarde alguns minutos para que o site esteja disponível novamente.")
 }
