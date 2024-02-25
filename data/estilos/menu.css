@@ -28,11 +28,11 @@
     visibility: hidden;
 }
 
-/* Este 'hover' será utilizado quando o mouse for utilizado:
+/* Este 'hover' será utilizado quando o mouse for utilizado:*/
 .menu:hover{
     box-shadow: 0 0 0 8px white, 0 0 0 8px white, 0 0 5px 9px #585563;;
     transition: box-shadow .5s ease-in-out;
-}*/
+}
 
 .hamburguer{
     position: relative;
@@ -71,7 +71,7 @@ input#menu{
 input#menu:checked ~ label ul{
     visibility: visible;
     opacity: 1;
-    transition: .5s .15s cubic-bezier(0, 1.07, 0 , 1.02);
+    transition: 20s .25s cubic-bezier(0, 1.07, 0 , 1.02);
 }
 
 input#menu:checked ~ label #tampar{
@@ -95,11 +95,6 @@ input#menu:checked ~ label .hamburguer::before{
 input#menu:checked ~ label .hamburguer::after{
     transform: rotate(90deg);
     bottom: 0;
-}
-
-input#menu:checked ~ label #btn-secundarios{
-    visibility: visible;
-    transition: 3s .2s cubic-bezier(0, 1.07, 0, 1.02);
 }
 
 #divisoria{
@@ -170,7 +165,7 @@ ul{
 #btn_on_off, #btn_config{
     display: inline-block;
     width: fit-content;
-    margin-right: 15px;
+    margin-right: 20px;
 }
 
 #btn_superior{
@@ -199,6 +194,10 @@ ul{
     box-shadow: 0px 0px 7px 2px #45364685;
 }
 
+.menu_link{
+    text-decoration: none;
+}
+
 .desc_btnprimario{
     width: 120px;
     margin-top: -50px;
@@ -214,12 +213,10 @@ ul{
 #btn_agendamento, #btn_reset{
     display: inline-block;
     margin-left: 0px;
+    cursor: pointer;
 }
 
-ul li:hover{
-    background-color: #453646;
-    border-color: #e7d8c9;
-}
+
 
 ul li a{
     width: 120px;

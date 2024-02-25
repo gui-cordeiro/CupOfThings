@@ -16,7 +16,7 @@ let totalFullTime = secondsFullTime + (minutesFullTime * 60)
 let minutesLeftTime = 0, secondsLeftTime = 0
 let totalLeftTime = secondsLeftTime + (minutesLeftTime * 60)
 
-const hourShutdown = 22, minShutdown = 8
+const hourShutdown = 10, minShutdown = 26
 
 let tmp_div = document.querySelector("div#tempo_popup")
 
